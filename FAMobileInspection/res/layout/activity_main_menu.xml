@@ -17,4 +17,25 @@
         android:text="@string/MainMenuTitle"
         android:textSize="@dimen/PageTitle" />
 
+    <Button
+        android:id="@+id/btnClients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvMainMenuTitle"
+        android:layout_below="@+id/tvMainMenuTitle"
+        android:layout_marginTop="97dp"
+        android:text="@string/MainMenuClientButton" 
+        android:onClick="OnClickClients"/>
+
+    <Button
+        android:id="@+id/btnScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnClients"
+        android:layout_alignRight="@+id/btnClients"
+        android:layout_below="@+id/btnClients"
+        android:layout_marginTop="44dp"
+        android:text="@string/MainMenuScan"
+        android:onClick="OnClickScan" />
+
 </RelativeLayout>

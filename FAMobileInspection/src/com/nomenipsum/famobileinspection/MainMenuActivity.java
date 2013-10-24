@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainMenuActivity extends Activity {
@@ -26,5 +27,17 @@ public class MainMenuActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main_menu, menu);
 		return true;
 	}
-
+	
+	public void OnClickClients(View v)	{
+		
+		Intent intent = new Intent(this, ClientsPage.class);
+	    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", "message");
+	    startActivity(intent);
+	
+	}
+	
+	public void OnClickScan(View v)	{
+		Intent intent = new Intent(this, ScanActivity.class);
+	    startActivity(intent);
+	}
 }

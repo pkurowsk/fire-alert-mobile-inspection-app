@@ -26,6 +26,14 @@
             android:name="com.nomenipsum.famobileinspection.MainMenuActivity"
             android:label="@string/title_activity_main_menu" >
         </activity>
+        <activity
+            android:name="com.nomenipsum.famobileinspection.ClientsPage"
+            android:label="@string/title_activity_clients_page" >
+        </activity>
+        <activity
+            android:name="com.nomenipsum.famobileinspection.ScanActivity"
+            android:label="@string/title_activity_scan" >
+        </activity>
     </application>
 
 </manifest>

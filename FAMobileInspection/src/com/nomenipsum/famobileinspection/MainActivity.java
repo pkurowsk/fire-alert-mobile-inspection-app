@@ -9,6 +9,8 @@ package com.nomenipsum.famobileinspection;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -53,6 +55,22 @@ public class MainActivity extends Activity {
 		if (etPassword.getText() != null)
 			password = etPassword.getText().toString();
 		
+		// Check for valid username password combination and show 
+		// alert box if invalid
+		if (!(username.equals("user") && password.equals("pass")) && false)	{
+		    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		    alertDialog.setTitle("Invalid username and password combination");
+		    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) {
+		         etUsername.setText("");
+		         etPassword.setText("");
+		   
+		      } }); 
+		    alertDialog.show();
+			
+		    return;
+		}
+				
 		Intent intent = new Intent(this, MainMenuActivity.class);
 	    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", username);
 	    startActivity(intent);
