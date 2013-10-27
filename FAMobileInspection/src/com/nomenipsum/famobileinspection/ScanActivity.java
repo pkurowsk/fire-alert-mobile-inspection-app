@@ -2,10 +2,17 @@ package com.nomenipsum.famobileinspection;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -19,6 +26,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -27,16 +36,20 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class ScanActivity extends Activity {
 	private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
+	
 	private DataReceiver dataScanner = new DataReceiver();
+	
 	private TextView tvScanProgress;
 	private TextView tvItemData;
+	
 	private EditText etCode;
+	
+	private Button btnEquipment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +84,14 @@ public class ScanActivity extends Activity {
 		etCode = (EditText)findViewById(R.id.etCode);
 		etCode.setOnEditorActionListener(codeEntered);
 		etCode.addTextChangedListener(textWatcher);
+		btnEquipment = (Button)findViewById(R.id.btnEquipment);
 	}
 	
 	OnEditorActionListener codeEntered = new OnEditorActionListener() {
 		@Override
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-			DisplayEquipmentAttributes(etCode.getText().toString().trim());
+			if (etCode.getText() != null)
+				DisplayEquipmentAttributes(etCode.getText().toString().trim());
 			return false;
 		}
 		
@@ -118,47 +133,68 @@ public class ScanActivity extends Activity {
 	}
 	
 	/**
-	 * Search Inspectiondata.xml for the equipment matching the ID 
+	 * Searches Inspectiondata.xml for the equipment matching the ID 
 	 * and display its attributes
 	 * <p>
-	 * FIXME: Only finds IDs of Extinguishers, should find all equipment (All children of Room element?) 
-	 * <p>
-	 * FIXME: Doesn't display Inspection elements
-	 * 
+	 * FIXME: Create EquipmentActivity and start activity from when a valid ID is found
 	 * @param id : The ID of the piece of equipment that was scanned or entered
 	 */
 	private void DisplayEquipmentAttributes(String id)	{
 		try
 		{
+			// Get InspectionData from assets
 			InputStream is = getAssets().open("InspectionData.xml");
 			
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 		    Document document = docBuilder.parse(is);
 		    
-		    NodeList nodeList = document.getElementsByTagName("Extinguisher");
+		    // Loop through all nodes of type Room
+		    NodeList nodeList = document.getElementsByTagName("Room");
 		    for (int i = 0; i < nodeList.getLength(); i++) {
 		        Node node = nodeList.item(i);
-		        if (node.getNodeType() == Node.ELEMENT_NODE) {
-		        	NamedNodeMap attributes = node.getAttributes();
-		        	// Found matching equipment
+		        NodeList equipmentList = node.getChildNodes();
+		        
+		        // Loop through child nodes of Room
+		        for (int j = 0; j < equipmentList.getLength(); j++)	{
+		        	Node equipment = equipmentList.item(j);
+		        	NamedNodeMap attributes = equipment.getAttributes();
+		        	
+		        	// Skip to next node if current node contains no attributes
+		        	if (attributes == null)
+		        		continue;
+		        	
+		        	// Check if equipment element matches id, if so display all of its attributes 
 		        	if (attributes.getNamedItem("id").getTextContent().equals(id))	{
-		        		tvItemData.append("ID: " + attributes.getNamedItem("id").getTextContent() + "\n"); 
-		        		tvItemData.append("Location: " + attributes.getNamedItem("location").getTextContent() + "\n");
-		        		tvItemData.append("Size: " + attributes.getNamedItem("size").getTextContent() + "\n"); 
-		        		tvItemData.append("Type: " + attributes.getNamedItem("type").getTextContent() + "\n");
-		        		tvItemData.append("Model: " + attributes.getNamedItem("model").getTextContent() + "\n");
-		        		tvItemData.append("Serial No: " + attributes.getNamedItem("serialNo").getTextContent() + "\n");
-		        		if (attributes.getNamedItem("manufacturingDate") != null)
-		        			tvItemData.append("Manufacturing Date: " + attributes.getNamedItem("manufacturingDate").getTextContent());
+			        	tvItemData.setText(equipment.getNodeName() + "\n");
+		        		for (int k = 0; k < attributes.getLength(); k++)
+		        			tvItemData.append(attributes.item(k).getNodeName() + ": " + attributes.item(k).getTextContent() + "\n");
 		        		
+		        		// Show button that lets user modify equipment inspection
+		        		final String message = id;
+		        		btnEquipment.setText("Inspect " + equipment.getNodeName() + " " + message);
+		        		btnEquipment.setOnClickListener(new OnClickListener()	{
+		                	public void onClick(View v)	{
+		            			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
+		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
+		            		    startActivity(intent);
+		            		}
+		            	});
+		        		btnEquipment.setVisibility(View.VISIBLE);
+		    		    tvScanProgress.setText("Equipment with ID " + id + " found");
+		    		    tvScanProgress.setTextColor(Color.GREEN);
+		    		    
+		        		// Quit method when equipment is found
 		        		return;
 		        	}
-		        	
 		        }
 		    }
 		    
-		    tvScanProgress.setText("Equipment not found");
+		    // Notify user that equipment is not found
+		    tvScanProgress.setText("Equipment with ID " + id + " not found");
+		    tvScanProgress.setTextColor(Color.BLACK);
+        	tvItemData.setText("");
+        	btnEquipment.setVisibility(View.INVISIBLE);
 		}
 		catch (IOException e)
 		{
@@ -170,5 +206,28 @@ public class ScanActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Overwrites an XML file with its modified attributes and elements
+	 * 
+	 * @param document : Document built from the InputStream containing the source XML file
+	 */
+	void WriteXML(Document document)
+	{
+		try	{
+			// Save XML File to device
+		    Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	
+		    // Initialise StreamResult with File object to save to file
+		    StreamResult result = new StreamResult(new StringWriter());
+		    DOMSource source = new DOMSource(document);
+		    transformer.transform(source, result);
+		}
+		catch (TransformerException e)	{
+			System.out.println(e.toString());
+		}
+		
 	}
 }
