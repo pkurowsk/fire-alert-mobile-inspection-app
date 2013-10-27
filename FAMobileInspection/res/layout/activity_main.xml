@@ -53,4 +53,15 @@
         android:text="@string/LoginPageButton" 
         android:onClick="OnClickLogin"/>
 
+    <CheckBox
+        android:id="@+id/saveUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLogin"
+        android:layout_alignRight="@+id/tvLogin"
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="30dp"
+        android:text="@string/CheckBoxString"
+        android:onClick="onCheckBoxClicked" />
+
 </RelativeLayout>

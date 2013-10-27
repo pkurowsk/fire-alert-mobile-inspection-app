@@ -16,5 +16,6 @@
     <string name="title_activity_scan">ScanActivity</string>
     <string name="ScanProgressText">Scan in progress...</string>
     <string name="ScanManualEnterTitle">Enter Equipment Code Manually:</string>
+    <string name="CheckBoxString">Save Information</string>
 
 </resources>
