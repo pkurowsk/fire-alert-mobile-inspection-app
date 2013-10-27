@@ -60,15 +60,16 @@ public class ClientsPage extends Activity {
 		        Node node = nodeList.item(i);
 		        if (node.getNodeType() == Node.ELEMENT_NODE) {
 		        	final String clientName = node.getAttributes().getNamedItem("name").getTextContent();
+		        	final String clientID = node.getAttributes().getNamedItem("id").getTextContent();
 	            	Button clientButton = new Button(this);
 	                clientButton.setText(clientName);
 		                 
 	                	// When a button is pressed it sends the client 
 		                clientButton.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
-		             			System.out.println(clientName);
-		            			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
-		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientName);
+		             			System.out.println(clientID);
+		            			Intent intent = new Intent(getBaseContext(), ClientInfoPage.class);
+		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientID);
 		            		    startActivity(intent);
 		            		}
 		            	});

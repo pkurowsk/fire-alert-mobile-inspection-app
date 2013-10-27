@@ -67,7 +67,7 @@ public class ScanActivity extends Activity {
 	
 	private void initialComponent() {
 		tvScanProgress = (TextView)findViewById(R.id.tvScanProgress);
-		tvItemData = (TextView)findViewById(R.id.tvItemData);
+		tvItemData = (TextView)findViewById(R.id.tvClientData);
 		etCode = (EditText)findViewById(R.id.etCode);
 		etCode.setOnEditorActionListener(codeEntered);
 		etCode.addTextChangedListener(textWatcher);
