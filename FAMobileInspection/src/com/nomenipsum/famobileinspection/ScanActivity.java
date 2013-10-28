@@ -1,5 +1,7 @@
 package com.nomenipsum.famobileinspection;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -27,6 +29,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -141,8 +144,10 @@ public class ScanActivity extends Activity {
 	private void DisplayEquipmentAttributes(String id)	{
 		try
 		{
-			// Get InspectionData from assets
-			InputStream is = getAssets().open("InspectionData.xml");
+			String path = Environment.getExternalStorageDirectory().toString();
+
+	    	File f = new File(path + "/savedReports/InspectionData.xml");
+	    	InputStream is= new FileInputStream(f.getPath());
 			
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
