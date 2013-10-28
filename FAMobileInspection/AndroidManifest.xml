@@ -34,6 +34,10 @@
             android:name="com.nomenipsum.famobileinspection.ScanActivity"
             android:label="@string/title_activity_scan" >
         </activity>
+        <activity
+            android:name="com.nomenipsum.famobileinspection.ManageUserAccounts"
+            android:label="@string/title_activity_manage_user_accounts" >
+        </activity>
     </application>
 
 </manifest>
