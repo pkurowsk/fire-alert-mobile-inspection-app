@@ -66,6 +66,7 @@ public class ClientsPage extends Activity {
 	                	// When a button is pressed it sends the client 
 		                clientButton.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
+		             			System.out.println(clientName);
 		            			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
 		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientName);
 		            		    startActivity(intent);
