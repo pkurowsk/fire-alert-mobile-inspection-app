@@ -175,9 +175,9 @@ public class ScanActivity extends Activity {
 		        		btnEquipment.setText("Inspect " + equipment.getNodeName() + " " + message);
 		        		btnEquipment.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
-		            			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
-		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
-		            		    startActivity(intent);
+		                		 Intent intent = new Intent(getBaseContext(), EquipmentView.class);
+		                         intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", "bob");
+		                         startActivity(intent);
 		            		}
 		            	});
 		        		btnEquipment.setVisibility(View.VISIBLE);

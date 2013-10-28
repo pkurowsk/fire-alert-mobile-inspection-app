@@ -128,6 +128,7 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, MainMenuActivity.class);
 	    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", username);
 	    startActivity(intent);
+	    
 
 	}
 	
