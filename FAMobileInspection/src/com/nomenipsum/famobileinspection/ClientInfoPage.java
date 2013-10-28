@@ -94,13 +94,13 @@ public class ClientInfoPage extends Activity {
                 for (int j = 0; j < floors.getLength(); j++)	{
                 	if (floors.item(j).getNodeType() == Node.ELEMENT_NODE)	{
                 		TextView tvFloorRooms = new TextView(this);
-            			tvFloorRooms.setText(floors.item(j).getAttributes().getNamedItem("name").getTextContent() + "\n");
+            			tvFloorRooms.setText("Floor: " + floors.item(j).getAttributes().getNamedItem("name").getTextContent() + "\n");
             			
             			// loop through rooms
             			NodeList rooms = floors.item(j).getChildNodes();
             			for (int k = 0; k < rooms.getLength(); k++)	{
                         	if (rooms.item(k).getNodeType() == Node.ELEMENT_NODE)	{
-                        		tvFloorRooms.append("  " + rooms.item(k).getAttributes().getNamedItem("id").getTextContent() + " " +
+                        		tvFloorRooms.append("\tRoom: " + rooms.item(k).getAttributes().getNamedItem("id").getTextContent() + " " +
                         				rooms.item(k).getAttributes().getNamedItem("No").getTextContent());
                         		
                 				llFloorRooms.addView(tvFloorRooms);

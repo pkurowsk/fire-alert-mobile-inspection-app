@@ -131,7 +131,7 @@ public class EquipmentView extends Activity {
               
               tvTestName.setText(inspectionAttributes.getNamedItem("name").getTextContent() + " test passed:");
               
-              cbPassFail.setChecked(inspectionAttributes.getNamedItem("testResult").equals("Pass"));
+              cbPassFail.setChecked(inspectionAttributes.getNamedItem("testResult").getTextContent().equals("Yes"));
               etTestNotes.setText(inspectionAttributes.getNamedItem("testNote").getTextContent());
               
               inspectionElements[h] = inspectionElement;
@@ -162,12 +162,13 @@ public class EquipmentView extends Activity {
 			  mistakes += "- " + inspectionElements[i].getAttributes().getNamedItem("name").getTextContent() + " requires test notes\n";
 		  }
 		  else	{
-			  System.out.println(testNotes[i].getText().toString());
 			  String result = "";
-			  if (testResults[i].isChecked())
-				  result = "Pass";
+			  if (testResults[i].isChecked())	{
+				  result = "Yes";
+				  System.out.println("checked");
+			  }
 			  else
-				  result = "Fail";
+				  result = "No";
 			  
 			  inspectionElements[i].getAttributes().getNamedItem("testResult").setTextContent(result);
 			  inspectionElements[i].getAttributes().getNamedItem("testNote").setTextContent(testNotes[i].getText().toString());
@@ -179,31 +180,32 @@ public class EquipmentView extends Activity {
 		  
 	  }
 	  if (!mistakes.equals(""))	{
-		  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			 
-			// set title
-			alertDialogBuilder.setTitle("Mistakes In Report");
-	
-			// set dialog message
-			alertDialogBuilder
-				.setMessage(mistakes)
-				.setCancelable(false)
-				.setPositiveButton("OK",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						
-					}
-				  });
-	
-				// create alert dialog
-				AlertDialog alertDialog = alertDialogBuilder.create();
-	
-				// show it
-				alertDialog.show();
+		  AlertBoxShow("Mistakes In Report", mistakes);
 	  }
 	  else	{
 		  WriteXML();
-	  }
-  }
+		  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			// set dialog message
+			alertDialogBuilder
+			.setTitle("Report Saved!")
+				.setMessage("This report is completed.")
+				.setCancelable(false)
+				.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+							backToEquipment();
+					}
+				  });
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				// show it
+				alertDialog.show();
+	  	}
+  	}
+  
+  	private void backToEquipment() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
   
   /**
 	 * Overwrites an XML file with its modified attributes and elements
@@ -224,7 +226,6 @@ public class EquipmentView extends Activity {
 		    
 		    // Write transformed xml file
 		    String xmlReport = result.getWriter().toString();
-		    System.out.println(xmlReport);
 		    FileWriter fileIO = new FileWriter(new File(path + "/savedReports/InspectionData.xml"));
 		    fileIO.write(xmlReport);
             fileIO.close();
@@ -237,6 +238,27 @@ public class EquipmentView extends Activity {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void AlertBoxShow(String title, String message)	{
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		 
+		// set title
+		alertDialogBuilder.setTitle(title);
+		// set dialog message
+		alertDialogBuilder
+			.setMessage(message)
+			.setCancelable(false)
+			.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog,int id) {
+				}
+			  });
+
+			// create alert dialog
+			AlertDialog alertDialog = alertDialogBuilder.create();
+
+			// show it
+			alertDialog.show();
 	}
 
 }
