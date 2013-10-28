@@ -1,5 +1,7 @@
 package com.nomenipsum.famobileinspection;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,6 +17,7 @@ import org.xml.sax.SAXException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,7 +53,10 @@ public class ClientsPage extends Activity {
 	private void LoadXML()	{
 		try
 		{
-			InputStream is = getAssets().open("InspectionData.xml");
+			String path = Environment.getExternalStorageDirectory().toString();
+
+			File f = new File(path + "/savedReports/InspectionData.xml");
+	    	InputStream is= new FileInputStream(f.getPath());
 			
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -74,13 +80,13 @@ public class ClientsPage extends Activity {
 		                contractButton.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
 		            			Intent intent = new Intent(getBaseContext(), ClientInfoPage.class);
-		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientID);
+		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", contractId);
 		            		    startActivity(intent);
 		            		}
 		            	});
 		                 LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
-		                 ll.addView(contractButton);
 		                 ll.addView(clientText);
+		                 ll.addView(contractButton);
 		            
 		        }
 		    }

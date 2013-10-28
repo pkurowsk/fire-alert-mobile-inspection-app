@@ -6,5 +6,6 @@
     <dimen name="PageTitle">24dp</dimen>
     <dimen name="item_data_text_size">14dp</dimen>
     <dimen name="main_menu_buttons_text_size">20dp</dimen>
+    <dimen name="directory_info_text_size">10dp</dimen>
 
 </resources>

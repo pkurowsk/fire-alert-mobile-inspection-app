@@ -32,13 +32,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class EquipmentView extends Activity {
-	String path= Environment.getExternalStorageDirectory().toString();
+	String path = Environment.getExternalStorageDirectory().toString();
     private Document document;
     private Node[] inspectionElements;
     private CheckBox[] testResults;
@@ -143,6 +144,7 @@ public class EquipmentView extends Activity {
               llInspectionElements.addView(cbPassFail);
               llInspectionElements.addView(etTestNotes);
             }
+            ((Button)findViewById(R.id.btnRecord)).requestFocus();
             // Quit method when equipment is found
             return;
           }

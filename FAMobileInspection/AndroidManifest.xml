@@ -46,7 +46,7 @@
             android:label="@string/title_activity_equipment_view" >
         </activity>
         <activity
-            android:name="com.nomenipsum.famobileinspection.ClientInfoPage"
+            android:name="ClientInfoPage"
             android:label="@string/title_activity_client_info_page" >
         </activity>
     </application>
