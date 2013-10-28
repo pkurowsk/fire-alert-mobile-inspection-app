@@ -9,28 +9,31 @@
     tools:context=".EquipmentView" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="17dp"
-        android:text="OK" 
-        android:onClick="OnClickRecord"/>
+        android:onClick="OnClickRecord"
+        android:text="@string/EquipmentViewRecordButton" />
+
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvAttributes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Equipment Attributes"
-        android:layout_below="@+id/button1" />
+        android:layout_below="@+id/btnRecord" />
   
     <ScrollView
-        android:id="@+id/scrollView1"
+        android:id="@+id/svInspectionElements"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1" 
-        android:layout_alignLeft="@+id/textView1" >
+        android:layout_below="@+id/tvAttributes" 
+        android:layout_alignLeft="@+id/tvAttributes" >
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/llInspectionElements"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

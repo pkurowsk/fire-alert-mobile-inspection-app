@@ -19,6 +19,8 @@
     <string name="title_activity_manage_user_accounts">Manage User Accounts</string>
     <string name="PasswordVarificatoin">Re-enter password for verification</string>
     <string name="CreateUserAccount">Create User Account</string> 
-    <string name="title_activity_equipment_view">EquipmentView</string>
+    <string name="title_activity_equipment_view">EquipmentView</string> 
+    <string name="EquipmentViewRecordButton">Record Results</string> 
+    <string name="MainMenuSendButton">Send Results</string>
 
 </resources>

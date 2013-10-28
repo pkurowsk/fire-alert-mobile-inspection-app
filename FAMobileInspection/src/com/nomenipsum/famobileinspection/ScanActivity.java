@@ -20,14 +20,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -176,8 +175,16 @@ public class ScanActivity extends Activity {
 		        		btnEquipment.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
 		                		 Intent intent = new Intent(getBaseContext(), EquipmentView.class);
-		                         intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", "bob");
+		                         intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
+		                         try
+		                         {
 		                         startActivity(intent);
+		                         }
+		                         catch (Exception e)
+		                         {
+		                        	 System.out.println(e.toString());
+		                         
+		                         }
 		            		}
 		            	});
 		        		btnEquipment.setVisibility(View.VISIBLE);
