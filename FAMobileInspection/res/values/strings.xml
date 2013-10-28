@@ -16,5 +16,8 @@
     <string name="title_activity_scan">Scan Equipment</string>
     <string name="ScanManualEnterTitle">Enter Equipment Code Manually:</string>
     <string name="CheckBoxString">Save Information</string>
+    <string name="title_activity_manage_user_accounts">Manage User Accounts</string>
+    <string name="PasswordVarificatoin">Re-enter password for verification</string>
+    <string name="CreateUserAccount">Create User Account</string> 
 
 </resources>

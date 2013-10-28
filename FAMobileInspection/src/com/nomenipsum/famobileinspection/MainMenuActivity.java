@@ -40,4 +40,9 @@ public class MainMenuActivity extends Activity {
 		Intent intent = new Intent(this, ScanActivity.class);
 	    startActivity(intent);
 	}
+	
+	 public void OnClickManageAccounts(View v){
+		     Intent intent = new Intent(this, ManageUserAccounts.class);
+		     startActivity(intent);
+		   } 
 }
