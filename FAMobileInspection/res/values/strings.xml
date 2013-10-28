@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Fire-Alert Mobile Inspection</string>
+    <string name="app_name">FAMobileInspection</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="LoginPageTitle">System Login</string>
     <string name="LoginPageUsername">Username</string>
     <string name="LoginPagePassword">Password</string>
     <string name="LoginPageButton">Login</string>
-    <string name="title_activity_main_menu">Main Menu</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="MainMenuTitle">Welcome</string>
-    <string name="title_activity_clients_page">Inspection Directory</string>
+    <string name="title_activity_clients_page">ClientsPage</string>
     <string name="MainMenuClientButton">View Clients</string>
     <string name="MainMenuScan">Scan Equipment</string>
-    <string name="title_activity_scan">Scan Equipment</string>
+    <string name="title_activity_scan">ScanActivity</string>
+    <string name="ScanProgressText">Scan in progress...</string>
     <string name="ScanManualEnterTitle">Enter Equipment Code Manually:</string>
-    <string name="CheckBoxString">Save Information</string>
-    <string name="title_activity_manage_user_accounts">Manage User Accounts</string>
-    <string name="PasswordVarificatoin">Re-enter password for verification</string>
-    <string name="CreateUserAccount">Create User Account</string> 
-    <string name="title_activity_equipment_view">EquipmentView</string>
+    <string name="title_activity_client_info_page">ClientInfoPage</string>
 
 </resources>

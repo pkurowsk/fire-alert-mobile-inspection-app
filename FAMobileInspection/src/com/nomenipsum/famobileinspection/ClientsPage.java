@@ -2,6 +2,8 @@ package com.nomenipsum.famobileinspection;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,8 +20,11 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 public class ClientsPage extends Activity {
 
@@ -60,21 +65,32 @@ public class ClientsPage extends Activity {
 		        Node node = nodeList.item(i);
 		        if (node.getNodeType() == Node.ELEMENT_NODE) {
 		        	final String clientName = node.getAttributes().getNamedItem("name").getTextContent();
-	            	Button clientButton = new Button(this);
-	                clientButton.setText(clientName);
-		                 
+		        	final String clientID = node.getAttributes().getNamedItem("id").getTextContent();
+	            	NodeList nodelist2 = document.getElementsByTagName("clientContract");
+	            	Node node2 = nodelist2.item(i);
+	            	final String contractId = node2.getAttributes().getNamedItem("id").getTextContent();
+		        	TextView clientText = new TextView(this);
+	                clientText.setText(clientName);
+	                Button contractButton = new Button(this);
+	               contractButton.setText(contractId);
 	                	// When a button is pressed it sends the client 
-		                clientButton.setOnClickListener(new OnClickListener()	{
-		                	public void onClick(View v)	{
-		            			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
-		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientName);
-		            		    startActivity(intent);
-		            		}
-		            	});
+		               
 		                 LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
-		                 ll.addView(clientButton);
+		                 ll.addView(clientText);
+		                 ll.addView(contractButton);
 		            
-		        }
+		        
+		    
+		    
+		    contractButton.setOnClickListener(new OnClickListener()	{
+            	public void onClick(View v)	{
+         			//System.out.println(clientID);
+        			Intent intent = new Intent(getBaseContext(), ClientInfoPage.class);
+        		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientID);
+        		    startActivity(intent);
+        		}
+        	});
+		    }
 		    }
 		}
 		catch (IOException e)

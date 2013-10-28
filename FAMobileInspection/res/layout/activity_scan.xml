@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlScan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -13,11 +12,9 @@
         android:id="@+id/tvScanProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="Press WinMate device button to begin scan"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ScanProgressText"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -40,23 +37,11 @@
         android:inputType="number" />
 
     <TextView
-        android:id="@+id/tvItemData"
+        android:id="@+id/tvClientData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etCode"
-        android:layout_marginTop="51dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="@dimen/item_data_text_size" />
-
-    <Button
-        android:id="@+id/btnEquipment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="Inspect &lt;equipment name>"
-        android:visibility="invisible" />
+        android:layout_marginTop="51dp" />
 
 </RelativeLayout>
