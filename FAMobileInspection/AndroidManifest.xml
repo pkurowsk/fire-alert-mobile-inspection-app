@@ -7,7 +7,9 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="9" />
-    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></permission>
+
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </permission>
 
     <application
         android:allowBackup="true"
@@ -36,10 +38,17 @@
             android:label="@string/title_activity_scan" >
         </activity>
         <activity
-            android:name="ManageUserAccounts"
+            android:name="com.nomenipsum.famobileinspection.ManageUserAccounts"
             android:label="@string/title_activity_manage_user_accounts" >
         </activity>
-        <activity android:name="EquipmentView" android:label="@string/title_activity_equipment_view"></activity>
+        <activity
+            android:name="com.nomenipsum.famobileinspection.EquipmentView"
+            android:label="@string/title_activity_equipment_view" >
+        </activity>
+        <activity
+            android:name="com.nomenipsum.famobileinspection.ClientInfoPage"
+            android:label="@string/title_activity_client_info_page" >
+        </activity>
     </application>
 
 </manifest>
