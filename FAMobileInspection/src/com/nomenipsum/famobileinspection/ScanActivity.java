@@ -147,7 +147,11 @@ public class ScanActivity extends Activity {
 			String path = Environment.getExternalStorageDirectory().toString();
 
 	    	File f = new File(path + "/savedReports/InspectionData.xml");
-	    	InputStream is= new FileInputStream(f.getPath());
+	    	InputStream is;
+	    	if (f.exists())
+	    		is= new FileInputStream(f.getPath());
+	    	else
+	    		is = getAssets().open("InspectionData.xml");
 			
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();

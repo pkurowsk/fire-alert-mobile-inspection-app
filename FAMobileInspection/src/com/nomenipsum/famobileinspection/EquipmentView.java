@@ -56,13 +56,17 @@ public class EquipmentView extends Activity {
 	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
     DocumentBuilder docBuilder;
 	try {
-        
-    	File f = new File(path + "/savedReports/InspectionData.xml");
-    	InputStream is= new FileInputStream(f.getPath());
-    	
 		docBuilder = docBuilderFactory.newDocumentBuilder();
-	
-		document = docBuilder.parse(f);
+    	File f = new File(path + "/savedReports/InspectionData.xml");
+    	InputStream is;
+    	if (f.exists())	{
+    		is= new FileInputStream(f.getPath());
+    		document = docBuilder.parse(f);
+    	}
+    	else	{
+    		is = getAssets().open("InspectionData.xml");
+			document = docBuilder.parse(is);
+    	}
 		is.close();
 	} catch (SAXException e) {
 		// TODO Auto-generated catch block
@@ -165,7 +169,6 @@ public class EquipmentView extends Activity {
 			  String result = "";
 			  if (testResults[i].isChecked())	{
 				  result = "Yes";
-				  System.out.println("checked");
 			  }
 			  else
 				  result = "No";
