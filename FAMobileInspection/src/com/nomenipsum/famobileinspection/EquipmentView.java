@@ -57,7 +57,7 @@ public class EquipmentView extends Activity {
     DocumentBuilder docBuilder;
 	try {
 		docBuilder = docBuilderFactory.newDocumentBuilder();
-    	File f = new File(path + "/savedReports/InspectionData.xml");
+    	File f = new File(path + "/InspectionData.xml");
     	InputStream is;
     	if (f.exists())	{
     		is= new FileInputStream(f.getPath());
@@ -229,7 +229,7 @@ public class EquipmentView extends Activity {
 		    
 		    // Write transformed xml file
 		    String xmlReport = result.getWriter().toString();
-		    FileWriter fileIO = new FileWriter(new File(path + "/savedReports/InspectionData.xml"));
+		    FileWriter fileIO = new FileWriter(new File(path + "/InspectionData.xml"));
 		    fileIO.write(xmlReport);
             fileIO.close();
 		}

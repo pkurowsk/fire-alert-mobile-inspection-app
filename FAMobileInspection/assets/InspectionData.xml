@@ -42,7 +42,7 @@
             
             <EmergencyLight id="88103" location="Some where" model="2341" make="Chubb" numHeads="4" totalPower="10W" voltage="10V">
               <!-- testResult of the following elements can be Yes or No. -->
-              <inspectionElement_1 name="Requires Service or Repair" testResult="Yes" testNote="hhhhhhfgu"/>
+              <inspectionElement_1 name="Requires Service or Repair" testResult="" testNote=""/>
               <inspectionElement_2 name="Operation Confirmed" testResult="" testNote=""/>
             </EmergencyLight>
             
