@@ -59,6 +59,7 @@
             android:layout_below="@+id/createAccount"
             android:layout_marginTop="66dp"
             android:text="@string/MainMenuSendButton"
-            android:textSize="@dimen/main_menu_buttons_text_size" />
+            android:textSize="@dimen/main_menu_buttons_text_size"
+            android:onClick="OnClickSendResults" />
 
 </RelativeLayout>

@@ -9,7 +9,7 @@
         android:targetSdkVersion="9" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+	<uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -26,27 +26,33 @@
         </activity>
         <activity
             android:name="com.nomenipsum.famobileinspection.MainMenuActivity"
-            android:label="@string/title_activity_main_menu" >
+            android:label="@string/title_activity_main_menu" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.nomenipsum.famobileinspection.ClientsPage"
-            android:label="@string/title_activity_clients_page" >
+            android:label="@string/title_activity_clients_page" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.nomenipsum.famobileinspection.ScanActivity"
-            android:label="@string/title_activity_scan" >
+            android:label="@string/title_activity_scan"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.nomenipsum.famobileinspection.ManageUserAccounts"
-            android:label="@string/title_activity_manage_user_accounts" >
+            android:label="@string/title_activity_manage_user_accounts"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.nomenipsum.famobileinspection.EquipmentView"
-            android:label="@string/title_activity_equipment_view" >
+            android:label="@string/title_activity_equipment_view"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="ClientInfoPage"
-            android:label="@string/title_activity_client_info_page" >
+            android:label="@string/title_activity_client_info_page"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
