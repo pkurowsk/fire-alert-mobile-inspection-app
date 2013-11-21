@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/famis_background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -26,7 +27,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="@string/LoginPageUsername" />
+        android:hint="@string/LoginPageUsername"
+        android:maxLines="1" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -52,5 +54,16 @@
         android:layout_marginTop="24dp"
         android:text="@string/LoginPageButton" 
         android:onClick="OnClickLogin"/>
+
+    <CheckBox
+        android:id="@+id/saveUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLogin"
+        android:layout_alignRight="@+id/tvLogin"
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="30dp"
+        android:text="@string/CheckBoxString"
+        android:onClick="onCheckBoxClicked" />
 
 </RelativeLayout>

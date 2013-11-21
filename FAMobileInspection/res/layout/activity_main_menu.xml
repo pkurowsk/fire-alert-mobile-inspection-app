@@ -17,25 +17,49 @@
         android:text="@string/MainMenuTitle"
         android:textSize="@dimen/PageTitle" />
 
-    <Button
-        android:id="@+id/btnClients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvMainMenuTitle"
-        android:layout_below="@+id/tvMainMenuTitle"
-        android:layout_marginTop="97dp"
-        android:text="@string/MainMenuClientButton" 
-        android:onClick="OnClickClients"/>
+        <Button
+            android:id="@+id/btnScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/btnClients"
+            android:layout_alignRight="@+id/btnClients"
+            android:layout_below="@+id/btnClients"
+            android:onClick="OnClickScan"
+            android:text="@string/MainMenuScan"
+            android:textSize="@dimen/main_menu_buttons_text_size" />
 
-    <Button
-        android:id="@+id/btnScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnClients"
-        android:layout_alignRight="@+id/btnClients"
-        android:layout_below="@+id/btnClients"
-        android:layout_marginTop="44dp"
-        android:text="@string/MainMenuScan"
-        android:onClick="OnClickScan" />
+        <Button
+            android:id="@+id/createAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/btnScan"
+            android:layout_alignRight="@+id/btnScan"
+            android:layout_below="@+id/btnScan"
+            android:onClick="OnClickManageAccounts"
+            android:text="@string/title_activity_manage_user_accounts"
+            android:textSize="@dimen/main_menu_buttons_text_size" />
+
+        <Button
+            android:id="@+id/btnClients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tvMainMenuTitle"
+            android:layout_below="@+id/tvMainMenuTitle"
+            android:layout_marginTop="46dp"
+            android:onClick="OnClickClients"
+            android:text="@string/MainMenuClientButton"
+            android:textSize="@dimen/main_menu_buttons_text_size" />
+
+        <Button
+            android:id="@+id/btnSendResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/createAccount"
+            android:layout_alignRight="@+id/createAccount"
+            android:layout_below="@+id/createAccount"
+            android:layout_marginTop="66dp"
+            android:text="@string/MainMenuSendButton"
+            android:textSize="@dimen/main_menu_buttons_text_size"
+            android:onClick="OnClickSendResults" />
 
 </RelativeLayout>

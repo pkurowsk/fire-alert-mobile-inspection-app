@@ -1,5 +1,7 @@
 package com.nomenipsum.famobileinspection;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -12,14 +14,16 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ClientsPage extends Activity {
 
@@ -49,7 +53,14 @@ public class ClientsPage extends Activity {
 	private void LoadXML()	{
 		try
 		{
-			InputStream is = getAssets().open("InspectionData.xml");
+			String path = Environment.getExternalStorageDirectory().toString();
+
+			File f = new File(path + "/InspectionData.xml");
+			InputStream is;
+	    	if (f.exists())
+	    		is= new FileInputStream(f.getPath());
+	    	else
+	    		is = getAssets().open("InspectionData.xml");
 			
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -60,20 +71,26 @@ public class ClientsPage extends Activity {
 		        Node node = nodeList.item(i);
 		        if (node.getNodeType() == Node.ELEMENT_NODE) {
 		        	final String clientName = node.getAttributes().getNamedItem("name").getTextContent();
-	            	Button clientButton = new Button(this);
-	                clientButton.setText(clientName);
+	            	final String clientID = node.getAttributes().getNamedItem("id").getTextContent();
+                               NodeList nodelist2 = document.getElementsByTagName("clientContract");
+	                                Node node2 = nodelist2.item(i);
+	                               final String contractId = node2.getAttributes().getNamedItem("id").getTextContent();
+	                              TextView clientText = new TextView(this);
+	                                  clientText.setText(clientName);
+	                                  Button contractButton = new Button(this);
+	                                 contractButton.setText(contractId);
 		                 
 	                	// When a button is pressed it sends the client 
-		                clientButton.setOnClickListener(new OnClickListener()	{
+		                contractButton.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
-		             			System.out.println(clientName);
-		            			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
-		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", clientName);
+		            			Intent intent = new Intent(getBaseContext(), ClientInfoPage.class);
+		            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", contractId);
 		            		    startActivity(intent);
 		            		}
 		            	});
 		                 LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
-		                 ll.addView(clientButton);
+		                 ll.addView(clientText);
+		                 ll.addView(contractButton);
 		            
 		        }
 		    }
