@@ -23,5 +23,6 @@
     <string name="EquipmentViewRecordButton">Record Results</string>
     <string name="MainMenuSendButton">Send Results</string>
     <string name="title_activity_client_info_page">Contract Directory</string>
+    <string name="ContractTermsButton">Terms</string>
 
 </resources>
