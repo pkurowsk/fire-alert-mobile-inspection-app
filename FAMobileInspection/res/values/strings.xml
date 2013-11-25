@@ -14,7 +14,7 @@
     <string name="MainMenuClientButton">View Clients</string>
     <string name="MainMenuScan">Scan Equipment</string>
     <string name="title_activity_scan">Scan Equipment</string>
-    <string name="ScanManualEnterTitle">Enter Equipment Code Manually:</string>
+    <string name="ScanManualEnterTitle">Enter Equipment ID:</string>
     <string name="CheckBoxString">Save Information</string>
     <string name="title_activity_manage_user_accounts">Manage User Accounts</string>
     <string name="PasswordVarificatoin">Re-enter password for verification</string>

@@ -101,11 +101,10 @@ public class ClientInfoPage extends Activity {
   }
   
   public void OnTermsClicked(View v)	{
-	  System.out.println("bsdfdc");
 		Notification.Show(this, 
 				"Terms", 
 				InspectionReportModel.getInstance().currentNode.getAttributes().getNamedItem("terms").getTextContent(), 
-				"OK", 
+				"Dismiss", 
 				"null");
   }
   

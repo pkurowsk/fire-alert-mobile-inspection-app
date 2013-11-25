@@ -1,23 +1,11 @@
 package com.nomenipsum.famobileinspection;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +23,7 @@ public class ClientsPage extends Activity {
 		Intent intent = getIntent();
 		String message = intent.getStringExtra("com.nomenipsum.famobileinspection.MESSAGE");
 		
-		LoadXML();
+		LoadClientsToButtons((LinearLayout)findViewById(R.id.llClients));
 	}
 
 	@Override
@@ -48,7 +36,7 @@ public class ClientsPage extends Activity {
 	/**
 	 * Creates a line of buttons on the view for each client
 	 */
-	private void LoadXML()	{
+	private void LoadClientsToButtons(LinearLayout ll)	{
 		if (InspectionReportModel.getInstance().getDocument() == null)
 			return;
 		
@@ -75,7 +63,6 @@ public class ClientsPage extends Activity {
 		        });
 		        
 		        // Add text and buttons to layout
-		        LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
 		        ll.addView(clientText);
 		        ll.addView(contractButton);
 	            
