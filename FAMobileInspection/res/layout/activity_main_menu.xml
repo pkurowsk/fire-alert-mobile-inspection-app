@@ -57,7 +57,8 @@
             android:layout_alignLeft="@+id/btnSendResults"
             android:layout_alignParentBottom="true"
             android:layout_alignRight="@+id/btnSendResults"
-            android:layout_below="@+id/btnSendResults" >
+            android:layout_below="@+id/btnSendResults"
+            android:background="@drawable/border" >
 
             <LinearLayout
                 android:id="@+id/llClients"

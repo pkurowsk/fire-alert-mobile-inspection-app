@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -32,7 +33,8 @@ public class MainMenuActivity extends Activity {
 		tvMainMenuTitle = (TextView)findViewById(R.id.tvMainMenuTitle);
 		tvMainMenuTitle.setText("Welcome, " + message);
 		
-		LoadXML();
+		//LoadXML();
+		new LoadClients().execute("");
 		
 	}
 
@@ -45,8 +47,10 @@ public class MainMenuActivity extends Activity {
 	
 	/**
 	 * Creates a line of buttons on the view for each client
+	 * 
+	 * @param ll : A LinearLayout that will have Buttons and TextViews added to it
 	 */
-	private void LoadXML()	{
+	private void LoadXML(LinearLayout ll)	{
 		if (InspectionReportModel.getInstance().getDocument() == null)
 			return;
 		
@@ -59,10 +63,10 @@ public class MainMenuActivity extends Activity {
 		        	
 	            final String contractId = clientContract.getAttributes().getNamedItem("id").getTextContent();
 	            TextView clientText = new TextView(this);
-	            clientText.setText(clientName);
+	            clientText.setText(" " + clientName);
 	            Button contractButton = new Button(this);
 	            contractButton.setText(contractId);
-	                 
+	                  
 	            // When a button is pressed it sends the client 
 		        contractButton.setOnClickListener(new OnClickListener()	{
 			        public void onClick(View v)	{
@@ -73,13 +77,44 @@ public class MainMenuActivity extends Activity {
 		        });
 		        
 		        // Add text and buttons to layout
-		        LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
 		        ll.addView(clientText);
 		        ll.addView(contractButton);
 	            
 	        }
 	    }
 	}
+	
+	/**
+	 * Asynchronous task that loads clients from XML into a linear layout
+	 * @author Philip
+	 *
+	 */
+	private class LoadClients extends AsyncTask<String, Void, String> {
+		
+		// Add text and buttons to layout
+        LinearLayout ll = new LinearLayout(getBaseContext());
+        
+        @Override
+        protected String doInBackground(String... params) {
+        	ll.setOrientation(LinearLayout.VERTICAL);
+            LoadXML(ll);
+            return null;
+        }        
+
+        @Override
+        protected void onPostExecute(String result) {      
+        	LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
+        	ll.addView(this.ll);
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
 	
 	public void OnClickClients(View v)	{
 		
