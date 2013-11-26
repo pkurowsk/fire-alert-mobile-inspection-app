@@ -74,11 +74,12 @@ public class EquipmentView extends Activity {
 	      CheckBox cbPassFail = new CheckBox(this);
 	      EditText etTestNotes = new EditText(this);
 	      
+	      // Set values from report
 	      tvTestName.setText(inspectionAttributes.getNamedItem("name").getTextContent() + " test passed:");
-	      
 	      cbPassFail.setChecked(inspectionAttributes.getNamedItem("testResult").getTextContent().equals("Yes"));
 	      etTestNotes.setText(inspectionAttributes.getNamedItem("testNote").getTextContent());
 	      
+	      // Store the values that will be saved
 	      inspectionElements[i] = inspectionElement;
 	      testResults[i] = cbPassFail;
 	      testNotes[i] = etTestNotes;
@@ -93,12 +94,16 @@ public class EquipmentView extends Activity {
 	    ((Button)findViewById(R.id.btnRecord)).requestFocus();
 	   
   }
+  
   public void OnClickRecord(View view){
+	  // Store a check list of all the mistakes in the report
 	  String mistakes = "";
+	  
 	  for (int i = 0; i < inspectionElements.length; i++)	{
 		  if (inspectionElements[i] == null)
 			  continue;
 		  
+		  // Check if the Inspection Elements with a Fail have a reason
 		  if (!testResults[i].isChecked() && testNotes[i].getText().toString().equals(""))	{
 			  mistakes += "- " + inspectionElements[i].getAttributes().getNamedItem("name").getTextContent() + " requires test notes\n";
 		  }
@@ -110,6 +115,7 @@ public class EquipmentView extends Activity {
 			  else
 				  result = "No";
 			  
+			  // Set Inspection Element values
 			  inspectionElements[i].getAttributes().getNamedItem("testResult").setTextContent(result);
 			  inspectionElements[i].getAttributes().getNamedItem("testNote").setTextContent(testNotes[i].getText().toString());
 			  
@@ -137,16 +143,23 @@ public class EquipmentView extends Activity {
 				alertDialog.show();
 	  }
 	  else	{
+		  
+		  // Timestamp the service address
 		  Node currentSAddress = InspectionReportModel.getInstance().getCurrentNode();
-		  
-		  while (!currentSAddress.getNodeName().equals("ServiceAddress"))
+		  while (!currentSAddress.getNodeName().equals("ServiceAddress"))	{
 			  currentSAddress = currentSAddress.getParentNode();
-		  
+		  }
+
 		  currentSAddress.getAttributes().getNamedItem("testTimeStamp").setTextContent(java.util.GregorianCalendar.getInstance().getTime().toString());
 		  
+		  // Save the inspection report
 		  InspectionReportModel.getInstance().SaveReport();
 		  Toast.makeText(getBaseContext(), "Report Saved", Toast.LENGTH_SHORT).show();
-		  super.onBackPressed();
+		  
+		  // Return to the previous page
+		  Intent resultIntent = new Intent();
+		  setResult(Activity.RESULT_OK, resultIntent);
+		  finish();
 	  }
 		  
 		  

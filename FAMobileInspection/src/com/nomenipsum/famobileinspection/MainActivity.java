@@ -59,7 +59,8 @@ public class MainActivity extends Activity {
 			etPassword.setText(PASS);
 			saveUser.setChecked(true);
 		
-			}else{
+			}
+		else{
 				saveUser.setChecked(false);
 			}
 		

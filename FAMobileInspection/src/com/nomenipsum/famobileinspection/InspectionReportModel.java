@@ -25,6 +25,13 @@ import org.xml.sax.SAXException;
 
 import android.os.Environment;
 
+/**
+ * Singleton class that manages InspectionData.xml and deals with saving,
+ * finding nodes, and reading the report.
+ * 
+ * @author Philip
+ *
+ */
 public class InspectionReportModel {
 	
 	private static InspectionReportModel instance;
@@ -32,16 +39,18 @@ public class InspectionReportModel {
 	Document document;
 	Node currentNode;
 	
-	private String reportPath = Environment.getExternalStorageDirectory().toString() + "/savedReports/InspectionData.xml";
+	private String reportDir = Environment.getExternalStorageDirectory().toString() + "/savedReports";
+	private String reportName = "InspectionData.xml";
 	
+	File report;
 	public InspectionReportModel()	{
-		File f = new File(reportPath);
+		report = new File(reportDir, reportName);
 		
 		try {
-	    	if (!f.exists())
-	    		f.createNewFile();
+	    	if (!report.exists())
+	    		report.createNewFile();
 	    	
-	    	InputStream is= new FileInputStream(f.getPath());
+	    	InputStream is= new FileInputStream(report.getPath());
 	    	
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder;
@@ -166,6 +175,28 @@ public class InspectionReportModel {
 		return instance;
 	}
 	
+	public String getReportAsString()	{
+		try	{
+		    Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	
+		    // Initialise StreamResult with File object to save to file
+		    StreamResult result = new StreamResult(new StringWriter());
+		    DOMSource source = new DOMSource(document);
+		    transformer.transform(source, result);
+		    
+		    // Write transformed xml file
+		    String xmlReport = result.getWriter().toString();
+		    
+		    return xmlReport;
+		}
+		catch (TransformerException e)	{
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Overwrites the XML file with its modified attributes and elements
 	 */
@@ -182,7 +213,7 @@ public class InspectionReportModel {
 		    
 		    // Write transformed xml file
 		    String xmlReport = result.getWriter().toString();
-		    FileWriter fileIO = new FileWriter(new File(reportPath));
+		    FileWriter fileIO = new FileWriter(report);
 		    fileIO.write(xmlReport);
             fileIO.close();
             
@@ -200,6 +231,13 @@ public class InspectionReportModel {
 		
 		// Report saved successfully
 		return true;
+	}
+	
+	/**
+	 * Sets the reports current node up one level
+	 */
+	public void TraverseUp()	{
+		currentNode = currentNode.getParentNode();
 	}
 
 }

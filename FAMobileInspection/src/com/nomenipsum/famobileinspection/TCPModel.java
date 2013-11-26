@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.concurrent.TimeoutException;
 
 import android.util.Log;
 
@@ -20,7 +23,8 @@ public class TCPModel {
 	public TCPModel(String IP, int ServerPort) throws IOException {
 		try {
 			ServerIPAdd = InetAddress.getByName(IP);
-			RTSPsocket = new Socket(ServerIPAdd, ServerPort);
+			RTSPsocket = new Socket();
+			RTSPsocket.connect(new InetSocketAddress(IP, ServerPort), 2500);
 		}
 		catch (UnknownHostException e)
 		{

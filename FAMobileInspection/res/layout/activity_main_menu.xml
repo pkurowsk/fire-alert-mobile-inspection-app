@@ -52,20 +52,29 @@
 
         <ScrollView
             android:id="@+id/svClients"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/btnSendResults"
             android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/btnSendResults"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
             android:layout_below="@+id/btnSendResults"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/border" >
 
             <LinearLayout
                 android:id="@+id/llClients"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center_horizontal"
                 android:orientation="vertical" >
+
+                <ProgressBar
+                    android:id="@+id/prgClientLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp" />
 
             </LinearLayout>
         </ScrollView>

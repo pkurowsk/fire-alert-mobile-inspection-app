@@ -1,6 +1,7 @@
 package com.nomenipsum.famobileinspection;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -17,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,11 +61,10 @@ public class MainMenuActivity extends Activity {
 	    for (int i = 0; i < clientContracts.getLength(); i++) {
 	        Node clientContract = clientContracts.item(i);
 	        if (clientContract.getNodeType() == Node.ELEMENT_NODE) {
-		        final String clientName = clientContract.getParentNode().getAttributes().getNamedItem("name").getTextContent();
-		        	
+	        	// Display client in textview and contract in button
 	            final String contractId = clientContract.getAttributes().getNamedItem("id").getTextContent();
 	            TextView clientText = new TextView(this);
-	            clientText.setText(" " + clientName);
+	            clientText.setText(" " + clientContract.getParentNode().getAttributes().getNamedItem("name").getTextContent());
 	            Button contractButton = new Button(this);
 	            contractButton.setText(contractId);
 	                  
@@ -105,24 +106,19 @@ public class MainMenuActivity extends Activity {
         protected void onPostExecute(String result) {      
         	LinearLayout ll = (LinearLayout)findViewById(R.id.llClients);
         	ll.addView(this.ll);
+        	ll.removeView(findViewById(R.id.prgClientLoading));
         }
 
         @Override
         protected void onPreExecute() {
+        	ProgressBar prg =  (ProgressBar)findViewById(R.id.prgClientLoading);
+        	prg.setProgress(0);
         }
 
         @Override
         protected void onProgressUpdate(Void... values) {
         }
     }
-	
-	public void OnClickClients(View v)	{
-		
-		Intent intent = new Intent(this, ClientsPage.class);
-	    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", "message");
-	    startActivity(intent);
-	
-	}
 	
 	public void OnClickScan(View v)	{
 		Intent intent = new Intent(this, ScanActivity.class);
@@ -161,15 +157,17 @@ public class MainMenuActivity extends Activity {
 			   int portNo = Integer.parseInt(etPort.getText().toString());
 			   
 			   try {
-				TCPModel tcpModel = new TCPModel(ipAddress, portNo);
-				
-				tcpModel.RTSPSend("xml file");
-				tcpModel.close();
-				
-				Toast.makeText(getBaseContext(), "Report Sent", Toast.LENGTH_SHORT).show();
+					TCPModel tcpModel = new TCPModel(ipAddress, portNo);
+					
+					tcpModel.RTSPSend(InspectionReportModel.getInstance().getReportAsString());
+					tcpModel.close();
+					
+					Toast.makeText(getBaseContext(), "Report Sent", Toast.LENGTH_SHORT).show();
 				
 			   } catch (IOException e) {
 					e.printStackTrace();
+					Toast.makeText(getBaseContext(), "Report not sent: " + e.toString(), Toast.LENGTH_SHORT).show();
+
 			   }
 			 }
 		 });

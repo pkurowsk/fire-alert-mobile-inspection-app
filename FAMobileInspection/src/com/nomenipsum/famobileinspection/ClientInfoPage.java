@@ -15,7 +15,11 @@ import android.widget.TextView;
 
 public class ClientInfoPage extends Activity {
   private TextView tvClientData, tvServiceAddress;
+  private Button btnTerms;
   private LinearLayout llFloorRooms;
+  
+  Node selectedServiceAddress;
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -23,6 +27,7 @@ public class ClientInfoPage extends Activity {
     
     tvClientData = (TextView)findViewById(R.id.tvClientData);
     tvServiceAddress = (TextView)findViewById(R.id.tvServiceAddress);
+    btnTerms = (Button)findViewById(R.id.btnTerms);
     llFloorRooms = (LinearLayout)findViewById(R.id.llFloorRooms);
     
     Intent intent = getIntent();
@@ -31,33 +36,32 @@ public class ClientInfoPage extends Activity {
     DisplayPageDetails(message);
   }
   
+  /**
+   * Displays floors, rooms, and equipment specified in the contract
+   * @param id : The id of the contract in the XML report
+   */
   private void DisplayPageDetails(String id)  {
-        Node clientContract = InspectionReportModel.getInstance().Find("clientContract", id, true);
+	  Node clientContract = InspectionReportModel.getInstance().Find("clientContract", id, true);
         
-		  NamedNodeMap attributes = clientContract.getAttributes();
+	  NamedNodeMap attributes = clientContract.getAttributes();
 		  
-		  // Show contract attributes
-		  if (attributes.getNamedItem("id").getTextContent().equals(id))  {
-			tvClientData.setText("");
-			tvClientData.append("Contract ID: " + attributes.getNamedItem("id").getTextContent() + "\nNo. " +attributes.getNamedItem("No").getTextContent() +  "\n"); 
-			tvClientData.append("Start date: " + attributes.getNamedItem("startDate").getTextContent() + "\n");
-			tvClientData.append("End Date: " + attributes.getNamedItem("endDate").getTextContent() + "\n");
+	  // Show contract attributes
+	  if (attributes.getNamedItem("id").getTextContent().equals(id))  {
+		  tvClientData.setText("");
+		  btnTerms.setText("Contract " + attributes.getNamedItem("id").getTextContent() + " Terms");
 		
 		// Get service address
 		NodeList contractChildren = clientContract.getChildNodes();
-		Node serviceAddress = null;
+		selectedServiceAddress = null;
+		
 		for (int i = 0; i < contractChildren.getLength(); i++)
 			if (contractChildren.item(i).getNodeType() == Node.ELEMENT_NODE)
-				serviceAddress = contractChildren.item(i);
+				selectedServiceAddress = contractChildren.item(i);
 				
-		NamedNodeMap addressAttributes = serviceAddress.getAttributes();
-		
-		tvServiceAddress.setText("Service Address\n");
-		for (int i = 0; i < addressAttributes.getLength(); i++)
-			tvServiceAddress.append(addressAttributes.item(i).getNodeName() + ": " + addressAttributes.item(i).getTextContent() + "\n");
+		UpdateServiceAddress();
 		
 		// Loop through floors
-		NodeList floors = serviceAddress.getChildNodes();
+		NodeList floors = selectedServiceAddress.getChildNodes();
 		for (int i = 0; i < floors.getLength(); i++)	{
 			if (floors.item(i).getNodeType() == Node.ELEMENT_NODE)	{
 				TextView tvFloorRooms = new TextView(this);
@@ -80,15 +84,15 @@ public class ClientInfoPage extends Activity {
 		    				Button btnEquipment = new Button(this);
 		    				btnEquipment.setText(equipment.getNodeName() + " " + equipment.getAttributes().getNamedItem("id").getTextContent());
 		    				
+		    				// When a button is pressed it sends the equipment id as an intent message
 		    				final String message = equipment.getAttributes().getNamedItem("id").getTextContent();
-		    				// When a button is pressed it sends the equipment 
 			                btnEquipment.setOnClickListener(new OnClickListener()	{
 			                	public void onClick(View v)	{
-			            			Intent intent = new Intent(getBaseContext(), EquipmentView.class);
-			            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
-		    		            		    startActivity(intent);
-		    		            		}
-		    		            	});
+				            			Intent intent = new Intent(getBaseContext(), EquipmentView.class);
+				            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
+		    		            		startActivityForResult(intent, 1);
+	    		            		}
+	    		            	});
 		            				llFloorRooms.addView(btnEquipment);
 		            			}
 		            		}
@@ -101,11 +105,54 @@ public class ClientInfoPage extends Activity {
   }
   
   public void OnTermsClicked(View v)	{
+	  NamedNodeMap contractAttrs = InspectionReportModel.getInstance().currentNode.getAttributes();
 		Notification.Show(this, 
 				"Terms", 
-				InspectionReportModel.getInstance().currentNode.getAttributes().getNamedItem("terms").getTextContent(), 
+				"No " + contractAttrs.getNamedItem("No").getTextContent() + "\n" + 
+				contractAttrs.getNamedItem("startDate").getTextContent() + " - " +
+				contractAttrs.getNamedItem("endDate").getTextContent() + "\n\n" + 
+				contractAttrs.getNamedItem("terms").getTextContent(), 
 				"Dismiss", 
 				"null");
+  }
+  
+  @Override 
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+	  super.onActivityResult(requestCode, resultCode, data); 
+	  switch(requestCode) { 
+		  case (1) : { 
+			  if (resultCode == Activity.RESULT_OK) {
+				  UpdateServiceAddress();
+			  } 
+			  break; 
+		  } 
+	  }
+	  
+	  // Find the client contract if the current node is not already a contract
+	  while (!InspectionReportModel.getInstance().currentNode.getNodeName().equals("clientContract"))	{
+		  InspectionReportModel.getInstance().TraverseUp();
+	  }
+  }
+  
+  /**
+   * Replaces the text in the Service address info 
+   * with the service address attributes
+   */
+  private void UpdateServiceAddress()	{
+	  NamedNodeMap addressAttributes = selectedServiceAddress.getAttributes();
+		
+		tvServiceAddress.setText("Service Address " + addressAttributes.item(0).getTextContent() + "\n");
+		for (int i = 1; i < addressAttributes.getLength(); i++)	{
+			tvServiceAddress.append(addressAttributes.item(i).getTextContent());
+			
+			if (i < addressAttributes.getLength() - 3)
+				tvServiceAddress.append(", ");
+			else
+				tvServiceAddress.append("\n");
+			
+		}
+		
+		
   }
   
 }
