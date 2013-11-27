@@ -8,52 +8,85 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ManageUserAccounts" >
 
-    <EditText
-        android:id="@+id/enterName"
+    <Button
+        android:id="@+id/createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvAttributes"
-        android:layout_below="@+id/tvAttributes"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:inputType="textPersonName" >
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:text="@string/CreateUserAccount" />
 
-        <requestFocus />
-    </EditText>
+   
 
     <TextView
         android:id="@+id/tvAttributes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
+        android:layout_alignRight="@+id/errorNotification"
         android:text="@string/title_activity_manage_user_accounts" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAttributes"
+        android:text="@string/FirstName" />
+
+    <EditText
+        android:id="@+id/FirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignRight="@+id/tvAttributes"
+        android:layout_below="@+id/textView1"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/FirstName"
+        android:layout_below="@+id/FirstName"
+        android:text="@string/LastName" />
+
+    <EditText
+        android:id="@+id/LastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignRight="@+id/FirstName"
+        android:layout_below="@+id/textView5"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvAttributes"
-        android:layout_below="@+id/tvAttributes"
+        android:layout_alignLeft="@+id/LastName"
+        android:layout_below="@+id/LastName"
         android:text="@string/LoginPageUsername"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:id="@+id/textView3"
+    <EditText
+        android:id="@+id/enterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/enterName"
-        android:layout_below="@+id/enterName"
-        android:layout_marginTop="28dp"
-        android:text="@string/LoginPagePassword"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignRight="@+id/FirstName"
+        android:layout_below="@+id/textView2"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/enterPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView3"
+        android:layout_alignRight="@+id/textView3"
         android:layout_below="@+id/textView3"
         android:ems="10"
         android:inputType="textPassword" />
@@ -62,8 +95,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/enterName"
-        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/enterPassword"
+        android:layout_below="@+id/enterPassword"
         android:text="@string/PasswordVarificatoin"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -72,26 +105,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView4"
+        android:layout_alignRight="@+id/errorNotification"
         android:layout_below="@+id/textView4"
         android:ems="10"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/createAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enterPassword2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp"
-        android:text="@string/CreateUserAccount" />
-
     <TextView
-        android:id="@+id/errorNotification"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/createAccount"
-        android:layout_below="@+id/enterPassword2"
-        android:layout_marginTop="23dp"
-        android:text="@string/CreateUserAccount" />
+        android:layout_alignLeft="@+id/enterName"
+        android:layout_alignRight="@+id/enterName"
+        android:layout_below="@+id/enterName"
+        android:text="@string/LoginPagePassword"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
