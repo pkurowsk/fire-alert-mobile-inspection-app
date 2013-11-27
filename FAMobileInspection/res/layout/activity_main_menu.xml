@@ -21,9 +21,9 @@
             android:id="@+id/btnScan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/btnClients"
-            android:layout_alignRight="@+id/btnClients"
-            android:layout_below="@+id/btnClients"
+            android:layout_alignLeft="@+id/tvMainMenuTitle"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvMainMenuTitle"
             android:onClick="OnClickScan"
             android:text="@string/MainMenuScan"
             android:textSize="@dimen/main_menu_buttons_text_size" />
@@ -40,26 +40,43 @@
             android:textSize="@dimen/main_menu_buttons_text_size" />
 
         <Button
-            android:id="@+id/btnClients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tvMainMenuTitle"
-            android:layout_below="@+id/tvMainMenuTitle"
-            android:layout_marginTop="46dp"
-            android:onClick="OnClickClients"
-            android:text="@string/MainMenuClientButton"
-            android:textSize="@dimen/main_menu_buttons_text_size" />
-
-        <Button
             android:id="@+id/btnSendResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/createAccount"
             android:layout_alignRight="@+id/createAccount"
             android:layout_below="@+id/createAccount"
-            android:layout_marginTop="66dp"
+            android:onClick="OnClickSendResults"
             android:text="@string/MainMenuSendButton"
-            android:textSize="@dimen/main_menu_buttons_text_size"
-            android:onClick="OnClickSendResults" />
+            android:textSize="@dimen/main_menu_buttons_text_size" />
+
+        <ScrollView
+            android:id="@+id/svClients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_below="@+id/btnSendResults"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border" >
+
+            <LinearLayout
+                android:id="@+id/llClients"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <ProgressBar
+                    android:id="@+id/prgClientLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp" />
+
+            </LinearLayout>
+        </ScrollView>
 
 </RelativeLayout>

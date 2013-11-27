@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_WORLD_WRITEABLE);
 		
 		// Obtain UI elements from the view by ID
@@ -58,7 +59,8 @@ public class MainActivity extends Activity {
 			etPassword.setText(PASS);
 			saveUser.setChecked(true);
 		
-			}else{
+			}
+		else{
 				saveUser.setChecked(false);
 			}
 		

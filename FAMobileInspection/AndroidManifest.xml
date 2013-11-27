@@ -30,11 +30,6 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.nomenipsum.famobileinspection.ClientsPage"
-            android:label="@string/title_activity_clients_page" 
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name="com.nomenipsum.famobileinspection.ScanActivity"
             android:label="@string/title_activity_scan"
             android:screenOrientation="portrait" >

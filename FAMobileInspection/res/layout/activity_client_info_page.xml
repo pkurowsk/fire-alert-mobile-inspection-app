@@ -8,26 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ClientInfoPage" >
 
-    <TextView
-        android:id="@+id/tvServiceAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvClientData"
-        android:layout_alignBottom="@+id/tvClientData"
-        android:layout_marginLeft="24dp"
-        android:layout_toRightOf="@+id/tvClientData"
-        android:text="address"
-        android:textSize="@dimen/directory_info_text_size" />
-
-    <TextView
-        android:id="@+id/tvClientData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="clientdata"
-        android:textSize="@dimen/directory_info_text_size" />
-
     <ScrollView
         android:id="@+id/svFloorRooms"
         android:layout_width="wrap_content"
@@ -38,9 +18,38 @@
         <LinearLayout
             android:id="@+id/llFloorRooms"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/btnTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/ContractTermsButton" 
+        android:onClick="OnTermsClicked"/>
+
+    <TextView
+        android:id="@+id/tvClientData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvServiceAddress"
+        android:layout_alignBottom="@+id/tvServiceAddress"
+        android:layout_alignLeft="@+id/btnTerms"
+        android:text="clientdata"
+        android:textSize="@dimen/directory_info_text_size" />
+
+    <TextView
+        android:id="@+id/tvServiceAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTerms"
+        android:layout_toRightOf="@+id/tvClientData"
+        android:text="address"
+        android:textSize="@dimen/directory_info_text_size" />
 
 </RelativeLayout>

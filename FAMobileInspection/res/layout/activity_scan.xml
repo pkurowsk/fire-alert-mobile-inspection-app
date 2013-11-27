@@ -49,14 +49,4 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@dimen/item_data_text_size" />
 
-    <Button
-        android:id="@+id/btnEquipment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="Inspect &lt;equipment name>"
-        android:visibility="invisible" />
-
 </RelativeLayout>
