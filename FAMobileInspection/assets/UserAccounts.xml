@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<accounts>
+		<user id="1" adminFlag="1" username="admin" pass="pass" firstname="admin" lastname="admin">inspector</user>
+		<user id="2" adminFlag="1" username="admin" pass="pass" firstname="jeff" lastname="coutu">inspector</user>
+		<user id="3" adminFlag="1" username="admin" pass="pass" firstname="shibby" lastname="shawn">inspector</user>
+		
+</accounts>
+	

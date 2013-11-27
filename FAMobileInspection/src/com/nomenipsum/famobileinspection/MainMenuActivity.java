@@ -126,7 +126,7 @@ public class MainMenuActivity extends Activity {
 	}
 	
 	 public void OnClickManageAccounts(View v){
-		     Intent intent = new Intent(this, ManageUserAccounts.class);
+		     Intent intent = new Intent(this, SelectUser.class);
 		     startActivity(intent);
 		   } 
 	 
