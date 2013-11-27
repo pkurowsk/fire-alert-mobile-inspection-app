@@ -17,16 +17,6 @@
         android:layout_marginBottom="24dp"
         android:text="@string/CreateUserAccount" />
 
-   
-
-    <TextView
-        android:id="@+id/tvAttributes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/errorNotification"
-        android:text="@string/title_activity_manage_user_accounts" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -105,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView4"
-        android:layout_alignRight="@+id/errorNotification"
+        android:layout_alignRight="@+id/enterPassword"
         android:layout_below="@+id/textView4"
         android:ems="10"
         android:inputType="textPassword" />
@@ -119,5 +109,13 @@
         android:layout_below="@+id/enterName"
         android:text="@string/LoginPagePassword"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvAttributes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/title_activity_manage_user_accounts" />
 
 </RelativeLayout>
