@@ -21,7 +21,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvAttributes"
+        android:layout_below="@+id/tvEqAttributes"
         android:text="@string/FirstName" />
 
     <EditText
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView1"
-        android:layout_alignRight="@+id/tvAttributes"
+        android:layout_alignRight="@+id/tvEqAttributes"
         android:layout_below="@+id/textView1"
         android:ems="10"
         android:inputType="textPersonName" />
@@ -111,7 +111,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/tvAttributes"
+        android:id="@+id/tvEqAttributes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

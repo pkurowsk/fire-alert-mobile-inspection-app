@@ -12,8 +12,8 @@
         android:id="@+id/svFloorRooms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvClientData"
-        android:layout_below="@+id/tvClientData" >
+        android:layout_alignLeft="@+id/btnTerms"
+        android:layout_below="@+id/tvServiceAddress" >
 
         <LinearLayout
             android:id="@+id/llFloorRooms"
@@ -30,25 +30,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="@string/ContractTermsButton" 
-        android:onClick="OnTermsClicked"/>
-
-    <TextView
-        android:id="@+id/tvClientData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tvServiceAddress"
-        android:layout_alignBottom="@+id/tvServiceAddress"
-        android:layout_alignLeft="@+id/btnTerms"
-        android:text="clientdata"
-        android:textSize="@dimen/directory_info_text_size" />
+        android:onClick="OnTermsClicked"
+        android:text="@string/ContractTermsButton" />
 
     <TextView
         android:id="@+id/tvServiceAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnTerms"
         android:layout_below="@+id/btnTerms"
-        android:layout_toRightOf="@+id/tvClientData"
         android:text="address"
         android:textSize="@dimen/directory_info_text_size" />
 

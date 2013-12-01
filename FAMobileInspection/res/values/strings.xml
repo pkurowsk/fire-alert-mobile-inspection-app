@@ -31,6 +31,6 @@
     <string name="title_activity_client_info_page">Contract Directory</string>
     <string name="ContractTermsButton">Terms</string>
     <string name="title_activity_show_user_accounts">ShowUserAccounts</string>
-    <string name="title_activity_select_user">SelectUser</string>
+    <string name="title_activity_select_user">Account Management</string>
 
 </resources>

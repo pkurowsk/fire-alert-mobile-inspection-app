@@ -47,7 +47,7 @@ public class EquipmentView extends Activity {
   }
   
   private void DisplayEquipmentAttributes(String id)  {
-    TextView tvAttributes = (TextView) findViewById(R.id.tvAttributes);
+    TextView tvAttributes = (TextView) findViewById(R.id.tvEqAttributes);
     
     Node equipment = InspectionReportModel.getInstance().currentNode;
     NamedNodeMap attributes = equipment.getAttributes();
@@ -100,29 +100,16 @@ public class EquipmentView extends Activity {
 	  String mistakes = "";
 	  
 	  for (int i = 0; i < inspectionElements.length; i++)	{
-		  if (inspectionElements[i] == null)
-			  continue;
-		  
-		  // Check if the Inspection Elements with a Fail have a reason
-		  if (!testResults[i].isChecked() && testNotes[i].getText().toString().equals(""))	{
-			  mistakes += "- " + inspectionElements[i].getAttributes().getNamedItem("name").getTextContent() + " requires test notes\n";
-		  }
-		  else	{
-			  String result = "";
-			  if (testResults[i].isChecked())	{
-				  result = "Yes";
-			  }
-			  else
-				  result = "No";
-			  
-			  // Set Inspection Element values
-			  inspectionElements[i].getAttributes().getNamedItem("testResult").setTextContent(result);
-			  inspectionElements[i].getAttributes().getNamedItem("testNote").setTextContent(testNotes[i].getText().toString());
-			  
+		  if (inspectionElements[i] != null)	{
+			  // Check if the Inspection Elements with a Fail have a reason
+			  if (!testResults[i].isChecked() && testNotes[i].getText().toString().equals(""))
+				  mistakes += "- " + inspectionElements[i].getAttributes().getNamedItem("name").getTextContent() + " requires test notes\n";
 		  }
 	  }
 	  
 	  if (!mistakes.equals(""))	{
+		  
+		  // Alert user of mistake
 		  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			 
 			// set title
@@ -144,12 +131,27 @@ public class EquipmentView extends Activity {
 	  }
 	  else	{
 		  
+		  // Fill values into inspection report
+		  for (int i = 0; i < inspectionElements.length; i++)	{
+			  if (inspectionElements[i] != null)	{
+				  String result = "";
+				  if (testResults[i].isChecked())	{
+					  result = "Yes";
+				  }
+				  else
+					  result = "No";
+				  
+				  // Set Inspection Element values
+				  inspectionElements[i].getAttributes().getNamedItem("testResult").setTextContent(result);
+				  inspectionElements[i].getAttributes().getNamedItem("testNote").setTextContent(testNotes[i].getText().toString());
+			  }
+		  }
+		  
 		  // Timestamp the service address
 		  Node currentSAddress = InspectionReportModel.getInstance().getCurrentNode();
 		  while (!currentSAddress.getNodeName().equals("ServiceAddress"))	{
 			  currentSAddress = currentSAddress.getParentNode();
 		  }
-
 		  currentSAddress.getAttributes().getNamedItem("testTimeStamp").setTextContent(java.util.GregorianCalendar.getInstance().getTime().toString());
 		  
 		  // Save the inspection report

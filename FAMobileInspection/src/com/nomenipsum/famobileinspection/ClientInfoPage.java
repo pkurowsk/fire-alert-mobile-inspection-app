@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ClientInfoPage extends Activity {
-  private TextView tvClientData, tvServiceAddress;
+  private TextView tvServiceAddress;
   private Button btnTerms;
   private LinearLayout llFloorRooms;
   
@@ -25,7 +25,6 @@ public class ClientInfoPage extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_client_info_page);
     
-    tvClientData = (TextView)findViewById(R.id.tvClientData);
     tvServiceAddress = (TextView)findViewById(R.id.tvServiceAddress);
     btnTerms = (Button)findViewById(R.id.btnTerms);
     llFloorRooms = (LinearLayout)findViewById(R.id.llFloorRooms);
@@ -47,7 +46,6 @@ public class ClientInfoPage extends Activity {
 		  
 	  // Show contract attributes
 	  if (attributes.getNamedItem("id").getTextContent().equals(id))  {
-		  tvClientData.setText("");
 		  btnTerms.setText("Contract " + attributes.getNamedItem("id").getTextContent() + " Terms");
 		
 		// Get service address
