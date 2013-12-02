@@ -29,25 +29,25 @@
             android:textSize="@dimen/main_menu_buttons_text_size" />
 
         <Button
-            android:id="@+id/createAccount"
+            android:id="@+id/btnSendResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/btnScan"
             android:layout_alignRight="@+id/btnScan"
             android:layout_below="@+id/btnScan"
-            android:onClick="OnClickManageAccounts"
-            android:text="@string/title_activity_manage_user_accounts"
+            android:onClick="OnClickSendResults"
+            android:text="@string/MainMenuSendButton"
             android:textSize="@dimen/main_menu_buttons_text_size" />
 
         <Button
-            android:id="@+id/btnSendResults"
+            android:id="@+id/createAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/createAccount"
-            android:layout_alignRight="@+id/createAccount"
-            android:layout_below="@+id/createAccount"
-            android:onClick="OnClickSendResults"
-            android:text="@string/MainMenuSendButton"
+            android:layout_alignLeft="@+id/btnSendResults"
+            android:layout_alignRight="@+id/btnSendResults"
+            android:layout_below="@+id/btnSendResults"
+            android:onClick="OnClickManageAccounts"
+            android:text="@string/title_activity_manage_user_accounts"
             android:textSize="@dimen/main_menu_buttons_text_size" />
 
         <ScrollView
@@ -55,15 +55,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/btnSendResults"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp" >
+            android:layout_below="@+id/createAccount"
+            android:layout_centerHorizontal="true" >
 
             <LinearLayout
                 android:id="@+id/llClients"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical" >
 
@@ -72,7 +70,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp" />
-
             </LinearLayout>
         </ScrollView>
 

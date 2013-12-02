@@ -33,7 +33,7 @@ public class MainMenuActivity extends Activity {
 		Intent intent = getIntent();
 		String message = intent.getStringExtra("com.nomenipsum.famobileinspection.MESSAGE");
 		tvMainMenuTitle = (TextView)findViewById(R.id.tvMainMenuTitle);
-		tvMainMenuTitle.setText("Welcome, " + message);
+		tvMainMenuTitle.setText("Welcome, " + Account.getInstance().getfName());
 		
 		//LoadXML();
 		new LoadClients().execute("");
@@ -126,9 +126,14 @@ public class MainMenuActivity extends Activity {
 	}
 	
 	 public void OnClickManageAccounts(View v){
-		     Intent intent = new Intent(this, SelectUser.class);
-		     startActivity(intent);
-		   } 
+		 if (!Account.getInstance().isAdmin)	{
+			 Toast.makeText(this, "Only Admins can manage user accounts", Toast.LENGTH_SHORT).show();
+			 return;
+		 }
+				
+	     Intent intent = new Intent(this, SelectUser.class);
+	     startActivity(intent);
+	   } 
 	 
 	 public void OnClickSendResults(View v)	{
 		 AlertDialog.Builder alert = new AlertDialog.Builder(this);

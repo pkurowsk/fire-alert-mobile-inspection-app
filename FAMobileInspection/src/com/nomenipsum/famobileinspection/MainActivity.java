@@ -10,6 +10,8 @@ package com.nomenipsum.famobileinspection;
 
 import java.io.IOException;
 
+import org.w3c.dom.Node;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -31,8 +33,8 @@ public class MainActivity extends Activity {
 	etPassword;							// The EditText that takes in the user's password
 	CheckBox saveUser;                  // The check box used to choose to save user and pass
 	boolean checked;                    // boolean value indicating wether or not the checkbox is checked
-	String username = "username";
-	String password = "password";
+	String username;
+	String password;
 	
 	
 	
@@ -82,55 +84,51 @@ public class MainActivity extends Activity {
 	 * @throws IOException 
 	 */
 	public void OnClickLogin(View v) throws IOException	{
-		android.util.Log.d(v.toString(), "Login button pressed");
-		
+		System.out.println(username + password + "Login button pressed");
 		
 		if (etUsername.getText() != null)
 			username = etUsername.getText().toString();
 		
 		if (etPassword.getText() != null)
 			password = etPassword.getText().toString();
-		
-		
-		
-		//check to see if they want to save
-		SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_WORLD_WRITEABLE);
-		if (checked==true){
-			
-			SharedPreferences.Editor   editor = prfs.edit();
-			editor.putString("Authentication_USER",etUsername.getText().toString());
-			editor.putString("Authentication_PASS",etPassword.getText().toString());
-			editor.putString("Authentication_STATUS", "true");
-			editor.commit();
-		}else if(checked==false){
-			SharedPreferences.Editor   editor = prfs.edit();
-			editor.putString("Authentication_USER","");
-			editor.putString("Authentication_PASS","");
-			editor.putString("Authentication_STATUS", "false");
-			editor.commit();
-		}
-		
-		
+		System.out.println(username + " " + password + " " + UserAcountModel.getInstance().currentNode.getFirstChild().getNodeName());
+
 		// Check for valid username password combination and show 
 		// alert box if invalid
-		if (!(username.equals("user") && password.equals("pass")) && false)	{
+		if (!UserAcountModel.getInstance().verifyLogin(username, password))	{
 		    AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 		    alertDialog.setTitle("Invalid username and password combination");
 		    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int which) {
-		         etUsername.setText("");
-		         etPassword.setText("");
+		         //etUsername.setText("");
+		         //etPassword.setText("");
 		   
 		      } }); 
 		    alertDialog.show();
 			
-		    return;
 		}
+		else	{
+			//check to see if they want to save
+			SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_WORLD_WRITEABLE);
+			if (checked==true){
 				
-		Intent intent = new Intent(this, MainMenuActivity.class);
-	    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", username);
-	    startActivity(intent);
-	    
+				SharedPreferences.Editor   editor = prfs.edit();
+				editor.putString("Authentication_USER",etUsername.getText().toString());
+				editor.putString("Authentication_PASS",etPassword.getText().toString());
+				editor.putString("Authentication_STATUS", "true");
+				editor.commit();
+			}else if(checked==false){
+				SharedPreferences.Editor   editor = prfs.edit();
+				editor.putString("Authentication_USER","");
+				editor.putString("Authentication_PASS","");
+				editor.putString("Authentication_STATUS", "false");
+				editor.commit();
+			}
+				
+			Intent intent = new Intent(this, MainMenuActivity.class);
+		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", username);
+		    startActivity(intent);
+		}
 
 	}
 	

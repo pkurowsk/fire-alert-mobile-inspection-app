@@ -105,46 +105,28 @@ public class UserAcountModel {
 		return null;
 	}
 	
-	/**
-	 * Searches through the inspection report for a node that is a child of Room.
-	 * 
-	 * @param id
-	 * @param setAsCurrent
-	 * @return
-	 */
-	public Node FindEquipment(String id, boolean setAsCurrent)	{
-		if (document == null)
-			return null;
-		
-		NodeList results = document.getElementsByTagName("Room");
-		
-		for (int i = 0; i < results.getLength(); i++)	{
-			Node child = results.item(i);
+	public boolean verifyLogin(String username, String pass)	{
+		Node userAccount = Find("user", username, false);
+
+		if (userAccount == null || 
+				username.equals("") ||
+				pass.equals("") ||
+				username == null ||
+				pass == null)	{
 			
-			if (child.getNodeType() == Node.ELEMENT_NODE)	{
-				NodeList children = child.getChildNodes();
-				
-				for (int j = 0; j < children.getLength(); j++)	{
-					Node equipment = children.item(j);
-					
-					if (equipment.getNodeType() == Node.ELEMENT_NODE)	{
-						NamedNodeMap attrs = equipment.getAttributes();
-						
-						if (attrs.getNamedItem("id").getTextContent().equals(id))	{
-							if (setAsCurrent)
-								currentNode = equipment;
-							return equipment;
-							
-						}
-					}
-				}
-				
-			}
+			return false;
+
 		}
 		
-		return null;
-		
+		if (userAccount.getAttributes().getNamedItem("username").getTextContent().equals(username) &&
+			userAccount.getAttributes().getNamedItem("pass").getTextContent().equals(pass))	{
+			
+			Account.getInstance().init(userAccount);
+			return true;
+		}
+		return false;
 	}
+	
 	
 	/**
 	 * Returns the current node in the report traversal
