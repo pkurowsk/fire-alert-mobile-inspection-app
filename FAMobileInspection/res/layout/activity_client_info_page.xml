@@ -38,8 +38,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btnTerms"
-        android:layout_below="@+id/btnTerms"
+        android:layout_below="@+id/spnSAddr"
         android:text="address"
         android:textSize="@dimen/directory_info_text_size" />
+
+    <Spinner
+        android:id="@+id/spnSAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTerms"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -1,5 +1,8 @@
 package com.nomenipsum.famobileinspection;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -9,16 +12,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ClientInfoPage extends Activity {
   private TextView tvServiceAddress;
   private Button btnTerms;
   private LinearLayout llFloorRooms;
+  private Spinner spnSAddr;
   
   Node selectedServiceAddress;
+  
+  Dictionary<String, Node> d = new Hashtable<String, Node>();
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,24 @@ public class ClientInfoPage extends Activity {
     tvServiceAddress = (TextView)findViewById(R.id.tvServiceAddress);
     btnTerms = (Button)findViewById(R.id.btnTerms);
     llFloorRooms = (LinearLayout)findViewById(R.id.llFloorRooms);
+    spnSAddr = (Spinner)findViewById(R.id.spnSAddr);
+    
+    spnSAddr.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			selectedServiceAddress = d.get(spnSAddr.getSelectedItem().toString());
+			UpdateServiceAddress();
+			displayLocationElements();
+			
+		}
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+    });
     
     Intent intent = getIntent();
     String message = intent.getStringExtra("com.nomenipsum.famobileinspection.MESSAGE");
@@ -50,56 +78,70 @@ public class ClientInfoPage extends Activity {
 		
 		// Get service address
 		NodeList contractChildren = clientContract.getChildNodes();
-		selectedServiceAddress = null;
-		
-		for (int i = 0; i < contractChildren.getLength(); i++)
-			if (contractChildren.item(i).getNodeType() == Node.ELEMENT_NODE)
-				selectedServiceAddress = contractChildren.item(i);
-				
-		UpdateServiceAddress();
-		
-		// Loop through floors
-		NodeList floors = selectedServiceAddress.getChildNodes();
-		for (int i = 0; i < floors.getLength(); i++)	{
-			if (floors.item(i).getNodeType() == Node.ELEMENT_NODE)	{
-				TextView tvFloorRooms = new TextView(this);
-				tvFloorRooms.setText("Floor: " + floors.item(i).getAttributes().getNamedItem("name").getTextContent() + "\n");
 			
-			// Loop through rooms
-			NodeList rooms = floors.item(i).getChildNodes();
-			for (int j = 0; j < rooms.getLength(); j++)	{
-		    	if (rooms.item(j).getNodeType() == Node.ELEMENT_NODE)	{
-		    		tvFloorRooms.append("\tRoom: " + rooms.item(j).getAttributes().getNamedItem("id").getTextContent() + " " +
-		    				rooms.item(j).getAttributes().getNamedItem("No").getTextContent());
-		    		
-					llFloorRooms.addView(tvFloorRooms);
-		    		
-		    		// Loop through equipment
-		    		NodeList equipmentList = rooms.item(j).getChildNodes();
-		    		for (int k = 0; k < equipmentList.getLength(); k++)	{
-		    			Node equipment = equipmentList.item(k);
-		    			if (equipment.getNodeType() == Node.ELEMENT_NODE)	{
-		    				Button btnEquipment = new Button(this);
-		    				btnEquipment.setText(equipment.getNodeName() + " " + equipment.getAttributes().getNamedItem("id").getTextContent());
-		    				
-		    				// When a button is pressed it sends the equipment id as an intent message
-		    				final String message = equipment.getAttributes().getNamedItem("id").getTextContent();
-			                btnEquipment.setOnClickListener(new OnClickListener()	{
-			                	public void onClick(View v)	{
-				            			Intent intent = new Intent(getBaseContext(), EquipmentView.class);
-				            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
-		    		            		startActivityForResult(intent, 1);
-	    		            		}
-	    		            	});
-		            				llFloorRooms.addView(btnEquipment);
-		            			}
-		            		}
-		            	}
-					}
-		    	}
-		    }
-		    return;
-		  }
+		ArrayAdapter <CharSequence> spnAdapter = new ArrayAdapter <CharSequence> (this, android.R.layout.simple_spinner_item );
+		spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		for (int i = 0; i < contractChildren.getLength(); i++)	{
+			if (contractChildren.item(i).getNodeType() == Node.ELEMENT_NODE)	{
+				if (selectedServiceAddress == null)
+					selectedServiceAddress = contractChildren.item(i);
+				d.put(contractChildren.item(i).getAttributes().getNamedItem("address").getTextContent(), contractChildren.item(i));
+				spnAdapter.add(contractChildren.item(i).getAttributes().getNamedItem("address").getTextContent());
+				
+			}
+		}
+		spnSAddr.setAdapter(spnAdapter);
+		
+		UpdateServiceAddress();	
+		displayLocationElements();
+		
+  		}
+  }
+  
+  private void displayLocationElements()	{
+	  llFloorRooms.removeAllViews();
+	// Loop through floors
+	NodeList floors = selectedServiceAddress.getChildNodes();
+	for (int i = 0; i < floors.getLength(); i++)	{
+		if (floors.item(i).getNodeType() == Node.ELEMENT_NODE)	{
+			TextView tvFloorRooms = new TextView(this);
+			tvFloorRooms.setText("Floor: " + floors.item(i).getAttributes().getNamedItem("name").getTextContent() + "\n");
+		
+		// Loop through rooms
+		NodeList rooms = floors.item(i).getChildNodes();
+		for (int j = 0; j < rooms.getLength(); j++)	{
+	    	if (rooms.item(j).getNodeType() == Node.ELEMENT_NODE)	{
+	    		tvFloorRooms.append("\tRoom: " + rooms.item(j).getAttributes().getNamedItem("id").getTextContent() + " " +
+	    				rooms.item(j).getAttributes().getNamedItem("No").getTextContent());
+	    		
+				llFloorRooms.addView(tvFloorRooms);
+	    		
+	    		// Loop through equipment
+	    		NodeList equipmentList = rooms.item(j).getChildNodes();
+	    		for (int k = 0; k < equipmentList.getLength(); k++)	{
+	    			Node equipment = equipmentList.item(k);
+	    			if (equipment.getNodeType() == Node.ELEMENT_NODE)	{
+	    				Button btnEquipment = new Button(this);
+	    				btnEquipment.setText(equipment.getNodeName() + " " + equipment.getAttributes().getNamedItem("id").getTextContent());
+	    				
+	    				// When a button is pressed it sends the equipment id as an intent message
+	    				final String message = equipment.getAttributes().getNamedItem("id").getTextContent();
+		                btnEquipment.setOnClickListener(new OnClickListener()	{
+		                	public void onClick(View v)	{
+			            			Intent intent = new Intent(getBaseContext(), EquipmentView.class);
+			            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
+	    		            		startActivityForResult(intent, 1);
+    		            		}
+    		            	});
+	            				llFloorRooms.addView(btnEquipment);
+	            			}
+	            		}
+	            	}
+				}
+	    	}
+	    }
+	    return;
   }
   
   public void OnTermsClicked(View v)	{
@@ -143,10 +185,10 @@ public class ClientInfoPage extends Activity {
 		for (int i = 1; i < addressAttributes.getLength(); i++)	{
 			tvServiceAddress.append(addressAttributes.item(i).getTextContent());
 			
-			if (i < addressAttributes.getLength() - 3)
-				tvServiceAddress.append(", ");
-			else
+			if (i == addressAttributes.getLength() - 3)
 				tvServiceAddress.append("\n");
+			else
+				tvServiceAddress.append(", ");
 			
 		}
 		

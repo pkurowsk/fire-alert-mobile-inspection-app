@@ -39,7 +39,7 @@ public class InspectionReportModel {
 	Document document;
 	Node currentNode;
 	
-	private String reportDir = Environment.getExternalStorageDirectory().toString() + "/savedReports";
+	private File reportDir = new File(Environment.getExternalStorageDirectory().toString() + "/savedReports");
 	private String reportName = "InspectionData.xml";
 	
 	File report;
@@ -47,8 +47,9 @@ public class InspectionReportModel {
 		report = new File(reportDir, reportName);
 		
 		try {
-	    	if (!report.exists())
-	    		report.createNewFile();
+			if (reportDir.exists() == false) {
+				reportDir.mkdirs();
+			}
 	    	
 	    	InputStream is= new FileInputStream(report.getPath());
 	    	

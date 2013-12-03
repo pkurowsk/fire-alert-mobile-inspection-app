@@ -34,17 +34,18 @@ public class UserAcountModel {
 	Node currentNode;
 	Element rootNode;
 	
-	private String reportPath = Environment.getExternalStorageDirectory().toString() + "/savedReports/UserAccounts.xml";
-	
+	private File fileDir = new File(Environment.getExternalStorageDirectory().toString() + "/savedReports");
+	private String reportName = "UserAccounts.xml";
+	File accountsFile;
 	public UserAcountModel()	{
-		File f = new File(reportPath);
+		accountsFile = new File(fileDir, reportName);
 		
 		try {
-	    	if (!f.exists()){
-	    		f.createNewFile();
+	    	if (!fileDir.exists()){
+	    		fileDir.mkdir();
 	    		
 	    	}else{
-	    	InputStream is= new FileInputStream(f.getPath());
+	    	InputStream is= new FileInputStream(accountsFile);
 	    	
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder docBuilder;
@@ -173,7 +174,7 @@ public class UserAcountModel {
 		    
 		    // Write transformed xml file
 		    String xmlReport = result.getWriter().toString();
-		    FileWriter fileIO = new FileWriter(new File(reportPath));
+		    FileWriter fileIO = new FileWriter(accountsFile);
 		    fileIO.write(xmlReport);
             fileIO.close();
             

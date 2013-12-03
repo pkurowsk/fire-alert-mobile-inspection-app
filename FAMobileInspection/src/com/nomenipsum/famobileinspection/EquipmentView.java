@@ -153,7 +153,10 @@ public class EquipmentView extends Activity {
 			  currentSAddress = currentSAddress.getParentNode();
 		  }
 		  currentSAddress.getAttributes().getNamedItem("testTimeStamp").setTextContent(java.util.GregorianCalendar.getInstance().getTime().toString());
+		  currentSAddress.getAttributes().getNamedItem("InspectorID").setTextContent("ID" + Account.getInstance().id);
 		  
+		  System.out.println(currentSAddress.getAttributes().getNamedItem("InspectorID").getTextContent());
+
 		  // Save the inspection report
 		  InspectionReportModel.getInstance().SaveReport();
 		  Toast.makeText(getBaseContext(), "Report Saved", Toast.LENGTH_SHORT).show();
