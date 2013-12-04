@@ -173,7 +173,7 @@ public class SelectUser extends Activity {
                  if(compare.equals(identifier)){
                 	 UserAcountModel.getInstance().giveRoot().removeChild(node);
                 	 UserAcountModel.getInstance().getDocument().normalize();
-                	 UserAcountModel.getInstance().SaveReport();
+                	 UserAcountModel.getInstance().SaveAccounts();
                 	 Intent intent=getIntent();
                 	 finish();
                 	 startActivity(intent);

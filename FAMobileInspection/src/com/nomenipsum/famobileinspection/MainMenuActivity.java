@@ -1,7 +1,6 @@
 package com.nomenipsum.famobileinspection;
 
 import java.io.IOException;
-import java.net.SocketTimeoutException;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -30,8 +29,6 @@ public class MainMenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 		
-		Intent intent = getIntent();
-		String message = intent.getStringExtra("com.nomenipsum.famobileinspection.MESSAGE");
 		tvMainMenuTitle = (TextView)findViewById(R.id.tvMainMenuTitle);
 		tvMainMenuTitle.setText("Welcome, " + Account.getInstance().getfName());
 		
@@ -54,7 +51,15 @@ public class MainMenuActivity extends Activity {
 	 */
 	private void LoadXML(LinearLayout ll)	{
 		if (InspectionReportModel.getInstance().getDocument() == null)
+		{
+			TextView tvNoFile = new TextView(this);
+			tvNoFile.setText("No Inspection Report found");
+			tvNoFile.setTextSize(20);
+			ll.addView(tvNoFile);
+			
 			return;
+		}
+
 		
 	    NodeList clientContracts = InspectionReportModel.getInstance().getDocument().getElementsByTagName("clientContract");
 	    
@@ -62,11 +67,30 @@ public class MainMenuActivity extends Activity {
 	        Node clientContract = clientContracts.item(i);
 	        if (clientContract.getNodeType() == Node.ELEMENT_NODE) {
 	        	// Display client in textview and contract in button
-	            final String contractId = clientContract.getAttributes().getNamedItem("id").getTextContent();
-	            TextView clientText = new TextView(this);
-	            clientText.setText(" " + clientContract.getParentNode().getAttributes().getNamedItem("name").getTextContent());
-	            Button contractButton = new Button(this);
-	            contractButton.setText(contractId);
+	            final String contractId;
+	            if (clientContract.getAttributes().getNamedItem("id") != null){
+	               	contractId = clientContract.getAttributes().getNamedItem("id").getTextContent();
+               }
+               else
+               {
+	               	contractId = "Contract ID missing";
+               }
+	            
+               TextView clientText = new TextView(this);
+               if (clientContract.getParentNode().getAttributes().getNamedItem("name") != null)
+            	   clientText.setText(" " + clientContract.getParentNode().getAttributes().getNamedItem("name").getTextContent());
+               else if (clientContract.getParentNode().getAttributes().getNamedItem("id")!=null)
+            	   clientText.setText("Client name missing, Client id: " + clientContract.getParentNode().getAttributes().getNamedItem("id").getTextContent());
+               else
+            	   clientText.setText("Client name and id missing");
+               
+               Button contractButton = new Button(this);
+               contractButton.setText(contractId);
+               if (contractButton.getText().equals("Contract ID missing"))
+               {
+                   contractButton.setClickable(false);
+                   contractButton.setEnabled(false);
+               }
 	                  
 	            // When a button is pressed it sends the client 
 		        contractButton.setOnClickListener(new OnClickListener()	{

@@ -10,8 +10,6 @@ package com.nomenipsum.famobileinspection;
 
 import java.io.IOException;
 
-import org.w3c.dom.Node;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -84,15 +82,13 @@ public class MainActivity extends Activity {
 	 * @throws IOException 
 	 */
 	public void OnClickLogin(View v) throws IOException	{
-		System.out.println(username + password + "Login button pressed");
 		
 		if (etUsername.getText() != null)
 			username = etUsername.getText().toString();
 		
 		if (etPassword.getText() != null)
 			password = etPassword.getText().toString();
-		System.out.println(username + " " + password + " " + UserAcountModel.getInstance().currentNode.getFirstChild().getNodeName());
-
+		
 		// Check for valid username password combination and show 
 		// alert box if invalid
 		if (!UserAcountModel.getInstance().verifyLogin(username, password))	{
@@ -100,9 +96,7 @@ public class MainActivity extends Activity {
 		    alertDialog.setTitle("Invalid username and password combination");
 		    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int which) {
-		         //etUsername.setText("");
-		         //etPassword.setText("");
-		   
+		         
 		      } }); 
 		    alertDialog.show();
 			

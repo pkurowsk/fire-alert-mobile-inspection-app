@@ -119,7 +119,7 @@ public class ManageUserAccounts extends Activity {
         		newUser.setAttribute("firstname",First);
         		newUser.setAttribute("lastname",Last);
         		root.appendChild(newUser);
-        		UserAcountModel.getInstance().SaveReport();
+        		UserAcountModel.getInstance().SaveAccounts();
         		launchSuccessNote();
         		
         		}else{
@@ -134,7 +134,7 @@ public class ManageUserAccounts extends Activity {
             		update.setAttribute("pass",enteredPassword);
             		update.setAttribute("firstname",First);
             		update.setAttribute("lastname",Last);
-            		UserAcountModel.getInstance().SaveReport();
+            		UserAcountModel.getInstance().SaveAccounts();
             		launchSuccessNote();
             		
         		}

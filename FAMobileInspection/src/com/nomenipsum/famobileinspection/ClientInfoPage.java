@@ -179,7 +179,7 @@ public class ClientInfoPage extends Activity {
    * with the service address attributes
    */
   private void UpdateServiceAddress()	{
-	  NamedNodeMap addressAttributes = selectedServiceAddress.getAttributes();
+	  	NamedNodeMap addressAttributes = selectedServiceAddress.getAttributes();
 		
 		tvServiceAddress.setText("Service Address " + addressAttributes.item(0).getTextContent() + "\n");
 		for (int i = 1; i < addressAttributes.getLength(); i++)	{

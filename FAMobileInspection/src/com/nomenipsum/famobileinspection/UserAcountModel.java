@@ -44,15 +44,19 @@ public class UserAcountModel {
 	    	if (!fileDir.exists()){
 	    		fileDir.mkdir();
 	    		
-	    	}else{
-	    	InputStream is= new FileInputStream(accountsFile);
-	    	
-			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-		    DocumentBuilder docBuilder;
+	    	}
+	    	else	{
+	    		
+	    	InputStream is= new FileInputStream(accountsFile.getPath());
 
+	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder docBuilder;
+		    
 			docBuilder = docBuilderFactory.newDocumentBuilder();
 			document = docBuilder.parse(is);
+			
 			rootNode = document.getDocumentElement();
+			
 	    	}
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -158,40 +162,50 @@ public class UserAcountModel {
 		return instance;
 	}
 	
+	@Override
+	public String toString()	{
+		try	{
+	    Transformer transformer = TransformerFactory.newInstance().newTransformer();
+	    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+	    // Initialise StreamResult with File object to save to file
+	    StreamResult result = new StreamResult(new StringWriter());
+	    DOMSource source = new DOMSource(document);
+	    transformer.transform(source, result);
+	    
+	    // Write transformed xml file
+	    String xmlReport = result.getWriter().toString();
+	    
+	    return xmlReport;
+		}
+		catch(TransformerException e)	{
+			
+			return null;
+		}
+		
+	}
+	
 	/**
 	 * Overwrites the XML file with its modified attributes and elements
 	 */
-	public boolean SaveReport()	{
+	public boolean SaveAccounts()	{
 		try	{
-			// Save XML File to device
-		    Transformer transformer = TransformerFactory.newInstance().newTransformer();
-		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	
-		    // Initialise StreamResult with File object to save to file
-		    StreamResult result = new StreamResult(new StringWriter());
-		    DOMSource source = new DOMSource(document);
-		    transformer.transform(source, result);
-		    
 		    // Write transformed xml file
-		    String xmlReport = result.getWriter().toString();
+		    String xmlReport = toString();
+		    
+		    System.out.println(xmlReport);
+		    
 		    FileWriter fileIO = new FileWriter(accountsFile);
 		    fileIO.write(xmlReport);
             fileIO.close();
             
 		}
-		catch (TransformerException e)	{
-			e.printStackTrace();
-			
-			return false;
-		} 
 		catch (IOException e) {
 			e.printStackTrace();
 			
-			return false;
 		}
 		
 		// Report saved successfully
 		return true;
 	}
-
 }
