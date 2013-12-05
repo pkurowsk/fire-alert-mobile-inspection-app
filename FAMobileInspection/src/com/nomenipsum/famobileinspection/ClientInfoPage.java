@@ -30,6 +30,8 @@ public class ClientInfoPage extends Activity {
   
   Dictionary<String, Node> d = new Hashtable<String, Node>();
   
+  ClientInfoController _controller;
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -40,14 +42,13 @@ public class ClientInfoPage extends Activity {
     llFloorRooms = (LinearLayout)findViewById(R.id.llFloorRooms);
     spnSAddr = (Spinner)findViewById(R.id.spnSAddr);
     
+    _controller = new ClientInfoController(this);
+    
     spnSAddr.setOnItemSelectedListener(new OnItemSelectedListener() {
-
 		@Override
-		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			selectedServiceAddress = d.get(spnSAddr.getSelectedItem().toString());
-			UpdateServiceAddress();
-			displayLocationElements();
+			_controller.selectServiceAddress();
 			
 		}
 		@Override
@@ -57,17 +58,13 @@ public class ClientInfoPage extends Activity {
 		}
     });
     
-    Intent intent = getIntent();
-    String message = intent.getStringExtra("com.nomenipsum.famobileinspection.MESSAGE");
-    
-    DisplayPageDetails(message);
   }
   
   /**
    * Displays floors, rooms, and equipment specified in the contract
    * @param id : The id of the contract in the XML report
    */
-  private void DisplayPageDetails(String id)  {
+  public void DisplayPageDetails(String id)  {
 	  Node clientContract = InspectionReportModel.getInstance().Find("clientContract", id, true);
         
 	  NamedNodeMap attributes = clientContract.getAttributes();
@@ -99,7 +96,7 @@ public class ClientInfoPage extends Activity {
   		}
   }
   
-  private void displayLocationElements()	{
+  public void displayLocationElements()	{
 	  llFloorRooms.removeAllViews();
 	// Loop through floors
 	NodeList floors = selectedServiceAddress.getChildNodes();
@@ -129,9 +126,7 @@ public class ClientInfoPage extends Activity {
 	    				final String message = equipment.getAttributes().getNamedItem("id").getTextContent();
 		                btnEquipment.setOnClickListener(new OnClickListener()	{
 		                	public void onClick(View v)	{
-			            			Intent intent = new Intent(getBaseContext(), EquipmentView.class);
-			            		    intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", message);
-	    		            		startActivityForResult(intent, 1);
+			            			_controller.openEquipmentPage(message);
     		            		}
     		            	});
 	            				llFloorRooms.addView(btnEquipment);
@@ -178,7 +173,7 @@ public class ClientInfoPage extends Activity {
    * Replaces the text in the Service address info 
    * with the service address attributes
    */
-  private void UpdateServiceAddress()	{
+  public void UpdateServiceAddress()	{
 	  	NamedNodeMap addressAttributes = selectedServiceAddress.getAttributes();
 		
 		tvServiceAddress.setText("Service Address " + addressAttributes.item(0).getTextContent() + "\n");

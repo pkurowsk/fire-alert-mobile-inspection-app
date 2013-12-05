@@ -1,13 +1,10 @@
 package com.nomenipsum.famobileinspection;
 
-import java.io.IOException;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +12,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,13 +20,18 @@ import android.widget.Toast;
 public class MainMenuActivity extends Activity {
 	
 	TextView tvMainMenuTitle;
+	
+	SendResultsController _controller;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 		
 		tvMainMenuTitle = (TextView)findViewById(R.id.tvMainMenuTitle);
-		tvMainMenuTitle.setText("Welcome, " + Account.getInstance().getfName());
+		tvMainMenuTitle.setText("Welcome, " + Account.getInstance().getFName());
+		
+		_controller = new SendResultsController(this);
 		
 		//LoadXML();
 		new LoadClients().execute("");
@@ -160,53 +161,6 @@ public class MainMenuActivity extends Activity {
 	   } 
 	 
 	 public void OnClickSendResults(View v)	{
-		 AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-		 alert.setTitle("Send Report Data");
-		 alert.setMessage("Enter IP Address and Port Number");
-
-		 // Set an EditText view to get user input 
-		 final EditText etIP = new EditText(this);
-		 etIP.setHint("Server IP Address");
-		 
-		 final EditText etPort = new EditText(this);
-		 etPort.setHint("Port Number");
-		 
-		 LinearLayout llAlert = new LinearLayout(this);
-		 llAlert.setOrientation(1);
-		 llAlert.addView(etIP);
-		 llAlert.addView(etPort);
-		 alert.setView(llAlert);
-		 
-		 alert.setView(llAlert);
-
-		 alert.setPositiveButton("Send Report", new DialogInterface.OnClickListener() {
-			 public void onClick(DialogInterface dialog, int whichButton) {
-			   String ipAddress = etIP.getText().toString();
-			   int portNo = Integer.parseInt(etPort.getText().toString());
-			   
-			   try {
-					TCPModel tcpModel = new TCPModel(ipAddress, portNo);
-					
-					tcpModel.RTSPSend(InspectionReportModel.getInstance().getReportAsString());
-					tcpModel.close();
-					
-					Toast.makeText(getBaseContext(), "Report Sent", Toast.LENGTH_SHORT).show();
-				
-			   } catch (IOException e) {
-					e.printStackTrace();
-					Toast.makeText(getBaseContext(), "Report not sent: " + e.toString(), Toast.LENGTH_SHORT).show();
-
-			   }
-			 }
-		 });
-
-		 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		   public void onClick(DialogInterface dialog, int whichButton) {
-		     
-		   }
-		 });
-
-		 alert.show();
+		 _controller.sendReport();
 	 }
 }

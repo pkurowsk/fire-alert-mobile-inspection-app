@@ -1,36 +1,19 @@
 package com.nomenipsum.famobileinspection;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SelectUser extends Activity {
 	 private Button[] userSelect;
@@ -171,7 +154,7 @@ public class SelectUser extends Activity {
                  String compare=attributes.getNamedItem("id").getTextContent();
                  
                  if(compare.equals(identifier)){
-                	 UserAcountModel.getInstance().giveRoot().removeChild(node);
+                	 UserAcountModel.getInstance().getRoot().removeChild(node);
                 	 UserAcountModel.getInstance().getDocument().normalize();
                 	 UserAcountModel.getInstance().SaveAccounts();
                 	 Intent intent=getIntent();

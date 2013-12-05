@@ -24,6 +24,10 @@ public class Account {
 		this.id = id;
 	}
 	
+	/**
+	 * Initializes the accountholder's first name, last name, and id with a Node
+	 * @param n : A "user" node read from UserAccounts.xml
+	 */
 	public void init(Node n)	{
 		fName = n.getAttributes().getNamedItem("firstname").getTextContent();
 		lName = n.getAttributes().getNamedItem("lastname").getTextContent();
@@ -36,11 +40,19 @@ public class Account {
 		
 	}
 	
+	/**
+	 * 
+	 * @return the current user's ID
+	 */
 	public String getID()	{
 		return id;
 	}
 	
-	public String getfName()	{
+	/**
+	 * 
+	 * @return : the current user's first name
+	 */
+	public String getFName()	{
 		return fName;
 	}
 

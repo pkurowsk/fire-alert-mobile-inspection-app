@@ -12,7 +12,6 @@
        android:id="@+id/svUserS"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_alignLeft="@+id/tvUserTitle"
        android:layout_below="@+id/button1" >
 
         <LinearLayout

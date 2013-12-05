@@ -56,10 +56,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.nomenipsum.famobileinspection.ShowUserAccounts"
-            android:label="@string/title_activity_show_user_accounts" >
-        </activity>
-        <activity
             android:name="com.nomenipsum.famobileinspection.SelectUser"
             android:label="@string/title_activity_select_user" >
         </activity>

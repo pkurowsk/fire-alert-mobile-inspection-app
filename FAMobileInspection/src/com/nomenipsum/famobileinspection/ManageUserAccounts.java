@@ -1,34 +1,20 @@
 package com.nomenipsum.famobileinspection;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class ManageUserAccounts extends Activity {
 	Node currentNode=null;
@@ -99,7 +85,7 @@ public class ManageUserAccounts extends Activity {
         	//figure out a way to check for id thinking check if node is null
         	if(identifier.equals("")){
         		NodeList nodeList = UserAcountModel.getInstance().getDocument().getElementsByTagName("user");
-        		Element root = UserAcountModel.getInstance().giveRoot();
+        		Element root = UserAcountModel.getInstance().getRoot();
         		Element newUser = UserAcountModel.getInstance().getDocument().createElement("user");
         		Node node = nodeList.item(nodeList.getLength()-1);
         		NamedNodeMap attributes1 = node.getAttributes();

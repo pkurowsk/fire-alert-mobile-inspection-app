@@ -41,7 +41,7 @@ public class UserAcountModel {
 		accountsFile = new File(fileDir, reportName);
 		
 		try {
-	    	if (!fileDir.exists()){
+	    	if (!fileDir.exists())	{
 	    		fileDir.mkdir();
 	    		
 	    	}
@@ -65,26 +65,26 @@ public class UserAcountModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		currentNode = document;
 	    
 	}
 	
+	public Element getRoot(){
+		return rootNode;
+	}
+	
 	/**
-	 * Searches through the inspection report for a node.
+	 * Searches through the accounts file for a node.
 	 * 
 	 * @param tag : The tag / name of the target node
 	 * @param key : The value of some attribute fo the target node 
 	 * @param setAsCurrent : If true the found node will be set as the report current node
 	 * @return The matching node or null if not found
 	 */
-	
-	public Element giveRoot(){
-		return rootNode;
-	}
 	public Node Find(String tag, String key, boolean setAsCurrent)	{
 		if (document == null)
 			return null;
@@ -130,18 +130,6 @@ public class UserAcountModel {
 			return true;
 		}
 		return false;
-	}
-	
-	
-	/**
-	 * Returns the current node in the report traversal
-	 * @return the current node
-	 */
-	public Node getCurrentNode()	{
-		if (currentNode == null)
-			currentNode = document;
-		
-		return currentNode;
 	}
 	
 	public Document getDocument()	{
