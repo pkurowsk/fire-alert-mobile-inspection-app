@@ -21,7 +21,8 @@ public class MainMenuActivity extends Activity {
 	
 	TextView tvMainMenuTitle;
 	
-	SendResultsController _controller;
+	SendResultsController _sendResultsController;
+	ScanController _scanController;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,8 @@ public class MainMenuActivity extends Activity {
 		tvMainMenuTitle = (TextView)findViewById(R.id.tvMainMenuTitle);
 		tvMainMenuTitle.setText("Welcome, " + Account.getInstance().getFName());
 		
-		_controller = new SendResultsController(this);
+		_sendResultsController = new SendResultsController(this);
+		_scanController = new ScanController(this);
 		
 		//LoadXML();
 		new LoadClients().execute("");
@@ -146,8 +148,11 @@ public class MainMenuActivity extends Activity {
     }
 	
 	public void OnClickScan(View v)	{
+		_scanController.startScan();
+		/*
 		Intent intent = new Intent(this, ScanActivity.class);
 	    startActivity(intent);
+	    */
 	}
 	
 	 public void OnClickManageAccounts(View v){
@@ -161,6 +166,6 @@ public class MainMenuActivity extends Activity {
 	   } 
 	 
 	 public void OnClickSendResults(View v)	{
-		 _controller.sendReport();
+		 _sendResultsController.sendReport();
 	 }
 }
