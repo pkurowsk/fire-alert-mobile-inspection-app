@@ -18,7 +18,10 @@ public class ScanController {
 
 	MainMenuActivity _view;
 	
-	private DataReceiver dataScanner;
+	private DataReceiver dataScanner = new DataReceiver();;
+	private AlertDialog alertDialog;
+	
+	private boolean isScanning = false;
 	
 	public ScanController(MainMenuActivity v)	{
 		_view = v;
@@ -30,10 +33,10 @@ public class ScanController {
 	 * registers the scanner
 	 */
 	public void startScan()	{
-		registerScanner();
+		isScanning = true;
 		AlertDialog.Builder alert = new AlertDialog.Builder(_view);
 
-		 alert.setTitle("Scanning...");
+		 alert.setTitle("Press scanner button to begin scan");
 		 alert.setMessage("or enter equipment ID below");
 
 		 // Set an EditText view to get user input 
@@ -46,7 +49,8 @@ public class ScanController {
 		 alert.setView(llAlert);
 		 
 		 alert.setView(llAlert);
-
+		 
+		 // Check equipment
 		 alert.setPositiveButton("Enter", new DialogInterface.OnClickListener() {
 			 public void onClick(DialogInterface dialog, int whichButton) {
 			   String eID = etEquipmentID.getText().toString();
@@ -54,25 +58,25 @@ public class ScanController {
 			   
 			 }
 		 });
-
+		 
+		 // Unregister the receiver when Cancel is pressed
 		 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 		   public void onClick(DialogInterface dialog, int whichButton) {
-		     unregisterReceiver();
+		     //unregisterReceiver();
 		   }
 		 });
 
-		 alert.show();
+		 alertDialog = alert.show();
 	}
 	
 	
-	private void registerScanner() {
-		dataScanner = new DataReceiver();
+	public void registerScanner() {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(ACTION_CONTENT_NOTIFY);
 		_view.registerReceiver(dataScanner, intentFilter);
 	}
 	
-	private void unregisterReceiver() {
+	public void unregisterReceiver() {
 		if (dataScanner != null) _view.unregisterReceiver(dataScanner);
 	}
 	
@@ -85,7 +89,14 @@ public class ScanController {
 				bundle  = intent.getExtras();
 				content = bundle.getString("CONTENT");
 				
-				CheckEquipment(content);
+				if (isScanning)
+					isScanning = false;
+				else
+					return;
+				
+				if (alertDialog != null)
+					alertDialog.dismiss();
+				CheckEquipment(content.trim());
 			}
 				
 		}
@@ -97,15 +108,12 @@ public class ScanController {
 	 * @param id : The ID of the piece of equipment that was scanned or entered
 	 */
 	private void CheckEquipment(String id)	{
-		
+		isScanning = false;
 		Node equipment = InspectionReportModel.getInstance().FindEquipment(id, true);
 		if (equipment == null)	{
 			Toast.makeText(_view, "Equipment " + id + " not found", Toast.LENGTH_SHORT).show();
-
 			return;
 		}
-		
-		unregisterReceiver();
 		
 		Intent intent = new Intent(_view, EquipmentView.class);
         intent.putExtra("com.nomenipsum.famobileinspection.MESSAGE", id);

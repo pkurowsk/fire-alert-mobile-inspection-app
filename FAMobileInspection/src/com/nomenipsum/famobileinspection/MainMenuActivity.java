@@ -47,6 +47,18 @@ public class MainMenuActivity extends Activity {
 		return true;
 	}
 	
+	@Override
+	protected void onDestroy() {
+		_scanController.unregisterReceiver();
+		super.onDestroy();
+	}
+	
+	@Override
+	protected void onResume() {
+		_scanController.registerScanner();
+		super.onResume();
+	}
+	
 	/**
 	 * Creates a line of buttons on the view for each client
 	 * 
